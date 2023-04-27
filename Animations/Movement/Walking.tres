@@ -1,0 +1,24 @@
+[gd_resource type="AnimationNodeBlendSpace2D" load_steps=5 format=3 uid="uid://cktgxaelswqpc"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_cofan"]
+animation = &"Puny_AnimationBase.anim/WalkLeft"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_yg0vi"]
+animation = &"Puny_AnimationBase.anim/WalkUp"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_u4isg"]
+animation = &"Puny_AnimationBase.anim/WalkRight"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ryfc7"]
+animation = &"Puny_AnimationBase.anim/WalkDown"
+
+[resource]
+blend_point_0/node = SubResource("AnimationNodeAnimation_cofan")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_yg0vi")
+blend_point_1/pos = Vector2(0, -1)
+blend_point_2/node = SubResource("AnimationNodeAnimation_u4isg")
+blend_point_2/pos = Vector2(1, 0)
+blend_point_3/node = SubResource("AnimationNodeAnimation_ryfc7")
+blend_point_3/pos = Vector2(0, 1)
+blend_mode = 1

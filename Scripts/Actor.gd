@@ -59,8 +59,9 @@ func player_process(delta):
 	var vertical = Input.get_action_strength("Down") - Input.get_action_strength("Up")
 	moveDir = Vector2(horizontal,vertical)
 	if Input.get_action_strength("Attack"):
-		moveDir = Vector2.ZERO
-		print(animationTree.get("parameters/AttackingState/playback").get_current_node())
+		animationTree.playAnimation("Melee",moveDir)
+		#moveDir = Vector2.ZERO
+		#print(animationTree.get("parameters/AttackingState/playback").get_current_node())
 		
 func ai_process(delta):
 	var debugPlayer = get_parent().get_node("Player")
@@ -73,19 +74,17 @@ func ai_process(delta):
 func no_process(delta):
 	pass
 	
+var lastDir = Vector2.ZERO
 func _physics_process(delta):
 	if player:
 		player_process(delta)
 	else:
 		ai_process(delta)
-	animationTree.playAnimation("Idle",moveDir)
-	#if moveDir != Vector2.ZERO:
-	#	SetAnimationState("MovingState")
-	#if currentAnimState == "MovingState":
-	#	if velocity == Vector2.ZERO :
-	#		animState.travel("Idle")
-	#	else:
-	#		animState.travel("Walk")
+	if moveDir != Vector2.ZERO:
+		animationTree.playAnimation("Walk",moveDir)
+		lastDir = moveDir
+	else:
+		animationTree.playAnimation("Idle",lastDir)
 			
 	velocity = moveDir * speed
 	if velocity != Vector2.ZERO:

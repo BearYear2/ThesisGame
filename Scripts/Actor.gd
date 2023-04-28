@@ -10,8 +10,7 @@ extends CharacterBody2D
 
 #Animation
 @onready var animationTree = $AnimationTree
-@onready var animState = animationTree.get("parameters/playback")
-var currentAnimState: String = "root"
+
 
 #AI specifics
 @export var player:bool = true
@@ -37,40 +36,18 @@ func randomModel():
 #maybe bring all of this to an external node, like the animation tree?
 #but then i will have to send inputs and the likes to it
 #but i would be able to deal with animations in an easier fashion
-func SetAnimationState(state:String = "root"):
-	currentAnimState = state
-	if state == "root":
-		animState = animationTree.get("parameters/playback")
-	else:
-		var format = "parameters/%s/playback"
-		animState = animationTree.get(format % state)
+
 func GetAnimationState():
 	#var animState = animationTree.get("parameters/playback").get_current_node()
 	#if animState in allAnimationStates["root"]:
 	#	animState
 	#return animState
 	pass
-var allAnimationStates = {
-	"MovingState": ["Idle", "Walk"],
-	"AttackingState": ["Throw", "Ranged", "Melee", "Magic"],
-	"root":["Hit", "Death"]
-}
-func SetAnimationStateBlend():
-	#var format = "parameters/%s%s/blend_position"
-	for substate in allAnimationStates[currentAnimState]:
-		var animPath = "/" + substate + "/blend_position"
-		if currentAnimState == "root":
-			# e.g. parameters/Hit/blend_position"
-			animPath = "parameters" + animPath
-			print(animPath)
-		else:
-			# e.g. parameters/MovingState/Idle/blend_position
-			animPath = "parameters/" + currentAnimState + animPath
-		animationTree.set(animPath,moveDir)
+
 
 func _ready():
 	randomModel()
-	animationTree.set("parameters/MovingState/Idle/blend_position",moveDir)
+
 	if player:
 		var camera2D = get_parent().get_node("camera").get_path()
 		remTran.set_remote_node(camera2D)
@@ -82,11 +59,9 @@ func player_process(delta):
 	var vertical = Input.get_action_strength("Down") - Input.get_action_strength("Up")
 	moveDir = Vector2(horizontal,vertical)
 	if Input.get_action_strength("Attack"):
-		SetAnimationState()
-		SetAnimationStateBlend()
-		#animState.travel("Hit")
-		animState.start("Hit")
 		moveDir = Vector2.ZERO
+		print(animationTree.get("parameters/AttackingState/playback").get_current_node())
+		
 func ai_process(delta):
 	var debugPlayer = get_parent().get_node("Player")
 	blackboard["speed"] = speed
@@ -99,22 +74,18 @@ func no_process(delta):
 	pass
 	
 func _physics_process(delta):
-	
 	if player:
 		player_process(delta)
 	else:
 		ai_process(delta)
-	
-	if moveDir != Vector2.ZERO:
-		SetAnimationStateBlend()
-		#if currentAnimState != "MovingState":
-		#	print(":(")
-		SetAnimationState("MovingState")
-	if currentAnimState == "MovingState":
-		if velocity == Vector2.ZERO :
-			animState.travel("Idle")
-		else:
-			animState.travel("Walk")
+	animationTree.playAnimation("Idle",moveDir)
+	#if moveDir != Vector2.ZERO:
+	#	SetAnimationState("MovingState")
+	#if currentAnimState == "MovingState":
+	#	if velocity == Vector2.ZERO :
+	#		animState.travel("Idle")
+	#	else:
+	#		animState.travel("Walk")
 			
 	velocity = moveDir * speed
 	if velocity != Vector2.ZERO:

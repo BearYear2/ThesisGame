@@ -7,10 +7,10 @@ animation = &"Puny_AnimationBase.anim/AttackLeft"
 animation = &"Puny_AnimationBase.anim/AttackRight"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_66mnw"]
-animation = &"Puny_AnimationBase.anim/AttackUp"
+animation = &"Puny_AnimationBase.anim/AttackDown"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ys5d1"]
-animation = &"Puny_AnimationBase.anim/AttackDown"
+animation = &"Puny_AnimationBase.anim/AttackUp"
 
 [resource]
 blend_point_0/node = SubResource("AnimationNodeAnimation_mks6l")

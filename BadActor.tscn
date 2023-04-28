@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bv1c42tdh7v4r"]
+[gd_scene load_steps=16 format=3 uid="uid://bv1c42tdh7v4r"]
 
 [ext_resource type="PackedScene" uid="uid://7xpm66w4iuxn" path="res://Actor.tscn" id="1_qs8sw"]
 [ext_resource type="Texture2D" uid="uid://edpjm2ouftxl" path="res://Assets/Puny-Characters/Mage-Cyan.png" id="2_xb6fg"]
@@ -12,6 +12,8 @@
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_4cyse"]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_x15fj"]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_t48b6"]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_86to0"]
 
@@ -39,7 +41,9 @@ frame = 0
 parameters/playback = SubResource("AnimationNodeStateMachinePlayback_4cyse")
 parameters/AttackingState/playback = SubResource("AnimationNodeStateMachinePlayback_x15fj")
 parameters/AttackingState/Ranged/blend_position = Vector2(0, 0)
-parameters/Hit/blend_position = Vector2(0, 0)
+parameters/DamagedState/playback = SubResource("AnimationNodeStateMachinePlayback_t48b6")
+parameters/DamagedState/Death/blend_position = Vector2(0, 0)
+parameters/DamagedState/Hit/blend_position = Vector2(0, 0)
 parameters/MovingState/playback = SubResource("AnimationNodeStateMachinePlayback_86to0")
 parameters/MovingState/Idle/blend_position = Vector2(0, 0)
 parameters/MovingState/Walk/blend_position = Vector2(0, 0)

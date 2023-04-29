@@ -16,27 +16,31 @@ func playAnimation(animName:String,animDir:Vector2):
 	for animation in allAnimationStates:
 			animationName = animName
 			break
+	
+	#this entire section might use some refactoring
+	#but i don't know how to deal with my complicated ifs
 	if animationName != "":
 		#if animName can be interrupted
 		#i can choose any other animation
 		#this also means that i should not replay this animation
 		#also, i need to make sure something else did not start
-		if animName in interruptableAnimations and currentAnimState != animName and !started:
-			animState.stop()
-			animState.travel(animName)
-			animState.start(animName)
-			currentAnimState =  animName
-			set("parameters/" + animName + "/blend_position",animDir)
-		#if animName cannot be interrupted
-		#i can only change when it finished
-		if animName not in interruptableAnimations and finished:
-			animState.stop()
-			animState.travel(animName)
-			animState.start(animName)
-			currentAnimState =  animName
-			set("parameters/" + animName + "/blend_position",animDir)
-			started = true
-		else:
+		if !started:
+			if animName in interruptableAnimations and currentAnimState != animName:
+				animState.stop()
+				animState.travel(animName)
+				animState.start(animName)
+				currentAnimState =  animName
+				set("parameters/" + animName + "/blend_position",animDir)
+			#if animName cannot be interrupted
+			#i can only change when it finished
+			elif animName not in interruptableAnimations:
+				animState.stop()
+				animState.travel(animName)
+				animState.start(animName)
+				currentAnimState =  animName
+				set("parameters/" + animName + "/blend_position",animDir)
+				started = true
+		if finished:
 			set("parameters/" + currentAnimState + "/blend_position",animDir)
 				
 			#var root:AnimationNodeStateMachine = tree_root

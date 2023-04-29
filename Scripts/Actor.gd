@@ -60,8 +60,6 @@ func player_process(delta):
 	moveDir = Vector2(horizontal,vertical)
 	if Input.get_action_strength("Attack"):
 		animationTree.playAnimation("Melee",moveDir)
-		#moveDir = Vector2.ZERO
-		#print(animationTree.get("parameters/AttackingState/playback").get_current_node())
 		
 func ai_process(delta):
 	var debugPlayer = get_parent().get_node("Player")

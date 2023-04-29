@@ -177,4 +177,7 @@ position = Vector2(669, 357)
 [node name="Bad" parent="." instance=ExtResource("4_0jhi1")]
 position = Vector2(668, 455)
 
+[node name="Bad2" parent="." instance=ExtResource("4_0jhi1")]
+position = Vector2(821, 408)
+
 [connection signal="item_clicked" from="camera/entityList" to="camera" method="OnItemClicked"]

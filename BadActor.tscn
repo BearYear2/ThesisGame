@@ -1,8 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://bv1c42tdh7v4r"]
+[gd_scene load_steps=11 format=3 uid="uid://bv1c42tdh7v4r"]
 
 [ext_resource type="PackedScene" uid="uid://7xpm66w4iuxn" path="res://Actor.tscn" id="1_qs8sw"]
 [ext_resource type="Script" path="res://Scripts/Decider.gd" id="3_7c25g"]
-[ext_resource type="Script" path="res://Scripts/SimpleAi.gd" id="4_m6f5f"]
 [ext_resource type="Script" path="res://FiniteStateMachine.gd" id="5_bj40d"]
 [ext_resource type="Script" path="res://BehaviourTree.gd" id="6_s1r1e"]
 [ext_resource type="Script" path="res://Scripts/Navigator.gd" id="7_8stfh"]
@@ -45,14 +44,63 @@ shape = SubResource("CircleShape2D_87d76")
 script = ExtResource("3_7c25g")
 NavigationMode = 1
 
-[node name="SimpleAi" type="Node2D" parent="Decider" index="0"]
-script = ExtResource("4_m6f5f")
-
-[node name="FiniteStateMachine" type="Node2D" parent="Decider" index="1"]
+[node name="FiniteStateMachine" type="Node2D" parent="Decider" index="0"]
 script = ExtResource("5_bj40d")
 
-[node name="BehaviourTree" type="Node2D" parent="Decider" index="2"]
+[node name="Idle" type="Node" parent="Decider/FiniteStateMachine" index="0"]
+
+[node name="Patrol" type="Node" parent="Decider/FiniteStateMachine" index="1"]
+
+[node name="Hunt" type="Node" parent="Decider/FiniteStateMachine" index="2"]
+
+[node name="Attack" type="Node" parent="Decider/FiniteStateMachine" index="3"]
+
+[node name="TakingDamage" type="Node" parent="Decider/FiniteStateMachine" index="4"]
+
+[node name="Dead" type="Node" parent="Decider/FiniteStateMachine" index="5"]
+
+[node name="Talk" type="Node" parent="Decider/FiniteStateMachine" index="6"]
+
+[node name="BehaviourTree" type="Node2D" parent="Decider" index="1"]
 script = ExtResource("6_s1r1e")
+
+[node name="Sel_Activities" type="Node" parent="Decider/BehaviourTree" index="0"]
+
+[node name="Die" type="Node" parent="Decider/BehaviourTree/Sel_Activities" index="0"]
+
+[node name="Talk" type="Node" parent="Decider/BehaviourTree/Sel_Activities" index="1"]
+
+[node name="Seq_Enemy" type="Node" parent="Decider/BehaviourTree/Sel_Activities" index="2"]
+
+[node name="EnemyWithinRadius" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_Enemy" index="0"]
+
+[node name="Pursue" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_Enemy" index="1"]
+
+[node name="Seq_Proximity" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_Enemy" index="2"]
+
+[node name="InMeleeRange" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_Enemy/Seq_Proximity" index="0"]
+
+[node name="Attack" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_Enemy/Seq_Proximity" index="1"]
+
+[node name="Item" type="Node" parent="Decider/BehaviourTree/Sel_Activities" index="3"]
+
+[node name="PickUp" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Item" index="0"]
+
+[node name="Seq_Patrol" type="Node" parent="Decider/BehaviourTree/Sel_Activities" index="4"]
+
+[node name="GetAvailablePoint" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_Patrol" index="0"]
+
+[node name="GoTo" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_Patrol" index="1"]
+
+[node name="Seq_Proximity" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_Patrol" index="2"]
+
+[node name="Close" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_Patrol/Seq_Proximity" index="0"]
+
+[node name="ChangePoint" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_Patrol/Seq_Proximity" index="1"]
+
+[node name="MarkOffPoint" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_Patrol/Seq_Proximity" index="2"]
+
+[node name="Idle" type="Node" parent="Decider/BehaviourTree/Sel_Activities" index="5"]
 
 [node name="Navigator" type="Node2D" parent="." index="6"]
 script = ExtResource("7_8stfh")

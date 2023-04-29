@@ -10,7 +10,7 @@
 [ext_resource type="Script" path="res://animator.gd" id="6_pugfu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7r8m7"]
-size = Vector2(14, 17)
+size = Vector2(10, 7)
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_y0q4q"]
 animation = &"Puny_AnimationBase.anim/FallDown"
@@ -113,17 +113,16 @@ size = Vector2(11, 11)
 z_index = 1
 script = ExtResource("1_b7ecp")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -3)
+[node name="HurtBox" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3.5)
 shape = SubResource("RectangleShape2D_7r8m7")
 debug_color = Color(0.792157, 0.803922, 0.788235, 0.615686)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Model" type="Sprite2D" parent="."]
 position = Vector2(0, -7)
 texture = ExtResource("2_mh15l")
 hframes = 24
 vframes = 8
-frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -145,9 +144,8 @@ script = ExtResource("6_pugfu")
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
 position = Vector2(0, -7)
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+[node name="HitBox" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_287gg")
-disabled = true
 
 [connection signal="animation_finished" from="AnimationTree" to="AnimationTree" method="AnimationFinished"]
 [connection signal="animation_started" from="AnimationTree" to="AnimationTree" method="AnimationStarted"]

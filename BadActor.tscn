@@ -8,8 +8,6 @@
 [ext_resource type="Script" path="res://Scripts/Navigator.gd" id="7_8stfh"]
 [ext_resource type="Script" path="res://Scripts/A+Agent.gd" id="8_xxt7b"]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_4cyse"]
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_8udur"]
 radius = 30.0
 
@@ -19,15 +17,11 @@ size = Vector2(20, 23)
 [sub_resource type="CircleShape2D" id="CircleShape2D_87d76"]
 radius = 80.0
 
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_4cyse"]
+
 [node name="Bad" instance=ExtResource("1_qs8sw")]
 speed = 50.0
 player = false
-
-[node name="Model" parent="." index="1"]
-frame = 0
-
-[node name="AnimationTree" parent="." index="3"]
-parameters/playback = SubResource("AnimationNodeStateMachinePlayback_4cyse")
 
 [node name="Sensor" type="Node2D" parent="." index="4"]
 
@@ -68,6 +62,9 @@ searchRadius = 25
 script = ExtResource("8_xxt7b")
 
 [node name="NavAgent2D" type="NavigationAgent2D" parent="." index="8"]
+
+[node name="AnimationTree" parent="." index="9"]
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_4cyse")
 
 [connection signal="body_entered" from="Sensor/Sight" to="Decider" method="UponSeeingSomething"]
 [connection signal="body_exited" from="Sensor/Sight" to="Decider" method="UponLosingSight"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://7xpm66w4iuxn"]
+[gd_scene load_steps=36 format=3 uid="uid://7xpm66w4iuxn"]
 
 [ext_resource type="Script" path="res://Scripts/Actor.gd" id="1_b7ecp"]
 [ext_resource type="Texture2D" uid="uid://dss1rfiwlanu3" path="res://Assets/Puny-Characters/Soldier-Blue.png" id="2_mh15l"]
@@ -8,6 +8,9 @@
 [ext_resource type="AnimationNodeStateMachinePlayback" uid="uid://brrrrnnfs85ai" path="res://Animations/AnimationTreePlayBack.tres" id="6_odajh"]
 [ext_resource type="AnimationNodeBlendSpace2D" uid="uid://cktgxaelswqpc" path="res://Animations/Movement/Walking.tres" id="6_ot410"]
 [ext_resource type="Script" path="res://animator.gd" id="6_pugfu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5tq0x"]
+size = Vector2(14, 15)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7r8m7"]
 size = Vector2(10, 7)
@@ -113,7 +116,14 @@ size = Vector2(11, 11)
 z_index = 1
 script = ExtResource("1_b7ecp")
 
-[node name="HurtBox" type="CollisionShape2D" parent="."]
+[node name="HurtArea" type="Area2D" parent="."]
+
+[node name="HurtBox" type="CollisionShape2D" parent="HurtArea"]
+position = Vector2(0, -6.5)
+shape = SubResource("RectangleShape2D_5tq0x")
+debug_color = Color(0.992157, 0.717647, 0.733333, 0.615686)
+
+[node name="CollisionBox" type="CollisionShape2D" parent="."]
 position = Vector2(0, -3.5)
 shape = SubResource("RectangleShape2D_7r8m7")
 debug_color = Color(0.792157, 0.803922, 0.788235, 0.615686)
@@ -144,8 +154,13 @@ script = ExtResource("6_pugfu")
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
 position = Vector2(0, -7)
 
-[node name="HitBox" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_287gg")
+[node name="HitArea" type="Area2D" parent="."]
 
+[node name="HitBox" type="CollisionShape2D" parent="HitArea"]
+shape = SubResource("RectangleShape2D_287gg")
+disabled = true
+
+[connection signal="area_entered" from="HurtArea" to="." method="UponHurt"]
+[connection signal="area_exited" from="HurtArea" to="." method="UponSafe"]
 [connection signal="animation_finished" from="AnimationTree" to="AnimationTree" method="AnimationFinished"]
 [connection signal="animation_started" from="AnimationTree" to="AnimationTree" method="AnimationStarted"]

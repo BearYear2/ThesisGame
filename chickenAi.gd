@@ -17,8 +17,10 @@ func randomModel():
 
 func _ready():
 	randomModel()
+	#OS.delay_msec(randf_range(100,1000))
+	#artificial delay to give a bit of randomness
+	await get_tree().create_timer(randf_range(0.1,10)).timeout
 	animState.travel("IdleSit")
-
 const Bounds_TopLeft = Vector2(-10,-10)
 const Bounds_BotRight = Vector2(10,10)
 var moveDir = Vector2.ZERO

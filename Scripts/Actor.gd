@@ -21,7 +21,7 @@ var blackboard : Dictionary= {}
 #Additional mechanics
 var dead = false
 var lastDir = Vector2.ZERO
-
+var attacked = false
 
 func death():
 	animationTree.playAnimation("Dead",moveDir)
@@ -67,7 +67,8 @@ func _physics_process(delta):
 			player_process(delta)
 		else:
 			ai_process(delta)
-		
+		if attacked:
+			animationTree.playAnimation("Hit",moveDir)
 		if moveDir != Vector2.ZERO:
 			animationTree.playAnimation("Walk",moveDir)
 			lastDir = moveDir
@@ -77,3 +78,15 @@ func _physics_process(delta):
 		velocity = moveDir * speed
 		if velocity != Vector2.ZERO:
 			move_and_slide()
+
+
+
+
+func UponHurt(area):
+	if area not in get_children() and area.name == "HurtArea":
+		attacked = true
+
+
+func UponSafe(area):
+	if area not in get_children() and area.name == "HurtArea":
+		attacked = false

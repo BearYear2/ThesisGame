@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://i7hksoyfaioo"]
+[gd_scene load_steps=9 format=3 uid="uid://i7hksoyfaioo"]
 
 [ext_resource type="Script" path="res://Scripts/camera.gd" id="1_bhu0i"]
 [ext_resource type="TileSet" uid="uid://emfgfsoijive" path="res://TileSetGrass.tres" id="1_c8yof"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://7xpm66w4iuxn" path="res://Actor.tscn" id="3_1h875"]
 [ext_resource type="Script" path="res://Scripts/A+Grid.gd" id="3_x2oc3"]
 [ext_resource type="PackedScene" uid="uid://bv1c42tdh7v4r" path="res://BadActor.tscn" id="4_0jhi1"]
+[ext_resource type="PackedScene" uid="uid://dabixbtvararm" path="res://Chicken.tscn" id="7_h60fy"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_efi75"]
 
@@ -179,5 +180,52 @@ position = Vector2(668, 455)
 
 [node name="Bad2" parent="." instance=ExtResource("4_0jhi1")]
 position = Vector2(821, 408)
+
+[node name="Chicekn" parent="." instance=ExtResource("7_h60fy")]
+
+[node name="Chicekn2" parent="." instance=ExtResource("7_h60fy")]
+position = Vector2(604, 299)
+
+[node name="Chicekn3" parent="." instance=ExtResource("7_h60fy")]
+position = Vector2(514, 362)
+
+[node name="Chicekn4" parent="." instance=ExtResource("7_h60fy")]
+position = Vector2(513, 448)
+
+[node name="Chicekn5" parent="." instance=ExtResource("7_h60fy")]
+position = Vector2(284, 409)
+
+[node name="Chicekn6" parent="." instance=ExtResource("7_h60fy")]
+position = Vector2(318, 271)
+
+[node name="Chicekn7" parent="." instance=ExtResource("7_h60fy")]
+position = Vector2(471, 593)
+
+[node name="Chicekn8" parent="." instance=ExtResource("7_h60fy")]
+position = Vector2(153, 654)
+
+[node name="Chicekn9" parent="." instance=ExtResource("7_h60fy")]
+position = Vector2(664, 958)
+
+[node name="Chicekn10" parent="." instance=ExtResource("7_h60fy")]
+position = Vector2(1093, 703)
+
+[node name="Chicekn11" parent="." instance=ExtResource("7_h60fy")]
+position = Vector2(1228, 1058)
+
+[node name="Chicekn12" parent="." instance=ExtResource("7_h60fy")]
+position = Vector2(1514, 718)
+
+[node name="Chicekn13" parent="." instance=ExtResource("7_h60fy")]
+position = Vector2(1938, 469)
+
+[node name="Chicekn14" parent="." instance=ExtResource("7_h60fy")]
+position = Vector2(1990, 469)
+
+[node name="Chicekn15" parent="." instance=ExtResource("7_h60fy")]
+position = Vector2(1957, 485)
+
+[node name="Chicekn16" parent="." instance=ExtResource("7_h60fy")]
+position = Vector2(1437, 419)
 
 [connection signal="item_clicked" from="camera/entityList" to="camera" method="OnItemClicked"]

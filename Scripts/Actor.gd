@@ -34,7 +34,7 @@ func randomModel():
 		while file != "":
 			if file.ends_with(".png"):
 				if randi_range(0,10) == 10: 
-					$Sprite2D.texture = load(faceDir+file)
+					$Model.texture = load(faceDir+file)
 					break
 			file = dir.get_next()
 func _ready():

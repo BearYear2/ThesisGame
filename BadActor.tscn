@@ -1,7 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://bv1c42tdh7v4r"]
+[gd_scene load_steps=12 format=3 uid="uid://bv1c42tdh7v4r"]
 
 [ext_resource type="PackedScene" uid="uid://7xpm66w4iuxn" path="res://Actor.tscn" id="1_qs8sw"]
-[ext_resource type="Texture2D" uid="uid://edpjm2ouftxl" path="res://Assets/Puny-Characters/Mage-Cyan.png" id="2_xb6fg"]
 [ext_resource type="Script" path="res://Scripts/Decider.gd" id="3_7c25g"]
 [ext_resource type="Script" path="res://Scripts/SimpleAi.gd" id="4_m6f5f"]
 [ext_resource type="Script" path="res://FiniteStateMachine.gd" id="5_bj40d"]
@@ -24,12 +23,8 @@ radius = 80.0
 speed = 50.0
 player = false
 
-[node name="CollisionShape2D" parent="." index="0"]
-position = Vector2(0, -1.5)
-
-[node name="Sprite2D" parent="." index="1"]
-texture = ExtResource("2_xb6fg")
-frame = 1
+[node name="Model" parent="." index="1"]
+frame = 0
 
 [node name="AnimationTree" parent="." index="3"]
 parameters/playback = SubResource("AnimationNodeStateMachinePlayback_4cyse")

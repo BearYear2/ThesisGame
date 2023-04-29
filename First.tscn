@@ -190,7 +190,7 @@ position = Vector2(604, 299)
 position = Vector2(514, 362)
 
 [node name="Chicekn4" parent="." instance=ExtResource("7_h60fy")]
-position = Vector2(513, 448)
+position = Vector2(1467, 891)
 
 [node name="Chicekn5" parent="." instance=ExtResource("7_h60fy")]
 position = Vector2(284, 409)

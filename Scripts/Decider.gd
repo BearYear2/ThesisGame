@@ -64,16 +64,18 @@ func Die(actor:Node2D):
 ##########################
 ###UnFinished functions###
 ##########################
-enum AttackType{Melee,Ranged,Magic}
-func Attack(actor:Node2D,target:Node2D,type:AttackType = AttackType.Melee):
-	#actor.animState.travel("Attack")
-	pass
+#enum AttackType{Melee,Ranged,Magic}
+func Attack(actor:Node2D,target:Node2D):#,type:AttackType = AttackType.Melee):
+	actor.animationTree.playAnimation("Melee",actor.moveDir)
 
 func PickUp(actor:Node2D,item:Node2D):
 	#actor.animState.travel("")
 	pass
 func GetHit(actor:Node2D):
 	actor.animState.travel("Hit")
+	
+func PickUpChicken(actor:Node2D,chicken:Node2D):
+	pass
 ############################
 ###Optional Functionality###
 ############################
@@ -94,6 +96,8 @@ func TalkTo(actor:Node2D,target:Node2D):
 func Trade(actor:Node2D,item:Node2D):
 	pass
 
+
+#simple Ai is done internally
 func simple(actor,blackboard):
 	if blackboard.get("target"):
 		#have we arrived close enough to our target?
@@ -111,9 +115,13 @@ func simple(actor,blackboard):
 			var patrolPoint = PatrolPoints[randi()%pointCount]
 			blackboard["target"]= patrolPoint
 
+#finite state machine related activities are delegated to
+#the FiniteStateMachineNode
 func finite(actor,blackboard):
 	pass
 
+#finite state machine related activities are delegated to
+#the BehaviourTreeNode
 func behave(actor,blackboard):
 	pass
 
@@ -150,6 +158,7 @@ func UponHearingSomething(body : Node2D):
 	pass
 
 func UponLosingSight(body:Node2D):
-	#if body in get_tree().get_nodes_in_group("targetable"):
-	if body.player:
-		worldState["blackboard"]["target"] = null
+	#sometimes, in debug, an error would be fired when stopping
+	if get_tree():
+		if body in get_tree().get_nodes_in_group("targetable") and body.player:
+			worldState["blackboard"]["target"] = null

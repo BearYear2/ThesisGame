@@ -65,16 +65,13 @@ func Die(actor:Node2D):
 ###UnFinished functions###
 ##########################
 #enum AttackType{Melee,Ranged,Magic}
+#add some delay to attacks
 func Attack(actor:Node2D,target:Node2D):#,type:AttackType = AttackType.Melee):
 	actor.animationTree.playAnimation("Melee",actor.moveDir)
 
 func PickUp(actor:Node2D,item:Node2D):
 	#actor.animState.travel("")
-	pass
-func GetHit(actor:Node2D):
-	actor.animState.travel("Hit")
-	
-func PickUpChicken(actor:Node2D,chicken:Node2D):
+	#functionality already existend in Actor.gd
 	pass
 ############################
 ###Optional Functionality###

@@ -1,6 +1,6 @@
 extends Node2D
 
-enum States{Idle, Patroling, Hunting, Attacking, BeingHit, Dead}
+enum States{Idle, Patroling, Hunting, Attacking, TakingDamage, Talk, Dead}
 
 func Init():
 	pass

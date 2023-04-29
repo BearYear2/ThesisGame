@@ -3,6 +3,7 @@ extends AnimationTree
 var currentAnimState: String = ""
 var started:bool = false
 var finished: bool = true
+var disabled: bool = false
 
 # Transform them into enums could also work
 # This would allow me to enforce the types, but it would be harder to get the values out
@@ -12,35 +13,26 @@ var allAnimationStates = [\
 	"Hit", "Death"] #non-interruptable
 var interruptableAnimations = ["Idle", "Walk"]
 func playAnimation(animName:String,animDir:Vector2):
-	var animationName = ""
-	for animation in allAnimationStates:
-			animationName = animName
-			break
-	
-	#this entire section might use some refactoring
-	#but i don't know how to deal with my complicated ifs
-	if animationName != "":
-		#if animName can be interrupted
-		#i can choose any other animation
-		#this also means that i should not replay this animation
-		#also, i need to make sure something else did not start
-		
-		if !started  and currentAnimState != animName:
-				animState.stop()
-				animState.travel(animName)
-				animState.start(animName)
-				currentAnimState =  animName
-				set("parameters/" + animName + "/blend_position",animDir)
-				if animName not in interruptableAnimations: #same as a simple else
-					started = true
-		if finished:
-			set("parameters/" + currentAnimState + "/blend_position",animDir)
-				
-			#var root:AnimationNodeStateMachine = tree_root
-			#print(root.has_transition("Idle","Walk"))
+	if !disabled:
+		var animationName = ""
+		for animation in allAnimationStates:
+				animationName = animName
+				break
+		if animationName != "":
+			if !started  and currentAnimState != animName:
+					animState.stop()
+					animState.travel(animName)
+					animState.start(animName)
+					currentAnimState =  animName
+					set("parameters/" + animName + "/blend_position",animDir)
+					if animName not in interruptableAnimations: #same as a simple else
+						started = true
+			if finished:
+				set("parameters/" + currentAnimState + "/blend_position",animDir)
+	if animName == "Dead":
+		disabled = true
 func _ready():
 	playAnimation("Idle",Vector2.UP)
-	#SetAnimationStateBlend()
 
 
 func AnimationFinished(anim_name):

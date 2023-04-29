@@ -59,7 +59,7 @@ func player_process(delta):
 	var vertical = Input.get_action_strength("Down") - Input.get_action_strength("Up")
 	moveDir = Vector2(horizontal,vertical)
 	if Input.get_action_strength("Attack"):
-		animationTree.playAnimation("Melee",moveDir)
+		animationTree.playAnimation("Dead",moveDir)
 		
 func ai_process(delta):
 	var debugPlayer = get_parent().get_node("Player")

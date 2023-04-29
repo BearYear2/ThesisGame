@@ -24,22 +24,15 @@ func playAnimation(animName:String,animDir:Vector2):
 		#i can choose any other animation
 		#this also means that i should not replay this animation
 		#also, i need to make sure something else did not start
-		if !started:
-			if animName in interruptableAnimations and currentAnimState != animName:
+		
+		if !started  and currentAnimState != animName:
 				animState.stop()
 				animState.travel(animName)
 				animState.start(animName)
 				currentAnimState =  animName
 				set("parameters/" + animName + "/blend_position",animDir)
-			#if animName cannot be interrupted
-			#i can only change when it finished
-			elif animName not in interruptableAnimations:
-				animState.stop()
-				animState.travel(animName)
-				animState.start(animName)
-				currentAnimState =  animName
-				set("parameters/" + animName + "/blend_position",animDir)
-				started = true
+				if animName not in interruptableAnimations: #same as a simple else
+					started = true
 		if finished:
 			set("parameters/" + currentAnimState + "/blend_position",animDir)
 				
@@ -53,10 +46,10 @@ func _ready():
 func AnimationFinished(anim_name):
 	started = false
 	finished = true
-	print("FINISHED",anim_name)
+	#print("FINISHED",anim_name)
 
 
 func AnimationStarted(anim_name):
 	started = true
 	finished = false
-	print("STARTED",anim_name)
+	#print("STARTED",anim_name)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://dabixbtvararm"]
+[gd_scene load_steps=30 format=3 uid="uid://dabixbtvararm"]
 
 [ext_resource type="Script" path="res://chickenAi.gd" id="1_c61tt"]
 [ext_resource type="Texture2D" uid="uid://bkcx84vmnvaom" path="res://Assets/Chickens/Chicken_Sprite_Sheet_Dark_Brown.png" id="1_scdtw"]
@@ -190,6 +190,9 @@ graph_offset = Vector2(-49, 120)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oc5j4"]
 size = Vector2(20, 17.5)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_5o2ko"]
+radius = 17.6777
+
 [node name="Chicekn" type="CharacterBody2D"]
 position = Vector2(610, 355)
 scale = Vector2(0.4, 0.4)
@@ -214,3 +217,8 @@ parameters/playback = SubResource("AnimationNodeStateMachinePlayback_j68q4")
 [node name="CollisionBox" type="CollisionShape2D" parent="."]
 position = Vector2(-0.00012207, 2.49994)
 shape = SubResource("RectangleShape2D_oc5j4")
+
+[node name="ItemChicken" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemChicken"]
+shape = SubResource("CircleShape2D_5o2ko")

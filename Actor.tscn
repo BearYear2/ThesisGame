@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://7xpm66w4iuxn"]
+[gd_scene load_steps=37 format=3 uid="uid://7xpm66w4iuxn"]
 
 [ext_resource type="Script" path="res://Scripts/Actor.gd" id="1_b7ecp"]
 [ext_resource type="Texture2D" uid="uid://dss1rfiwlanu3" path="res://Assets/Puny-Characters/Soldier-Blue.png" id="2_mh15l"]
@@ -112,6 +112,8 @@ graph_offset = Vector2(-330, -76)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_287gg"]
 size = Vector2(11, 11)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2rddd"]
+
 [node name="Actor" type="CharacterBody2D" groups=["targetable"]]
 z_index = 1
 script = ExtResource("1_b7ecp")
@@ -133,6 +135,7 @@ position = Vector2(0, -7)
 texture = ExtResource("2_mh15l")
 hframes = 24
 vframes = 8
+frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -160,7 +163,20 @@ position = Vector2(0, -7)
 shape = SubResource("RectangleShape2D_287gg")
 disabled = true
 
+[node name="PickArea" type="Area2D" parent="."]
+
+[node name="PickUpBox" type="CollisionShape2D" parent="PickArea"]
+position = Vector2(0, -6)
+scale = Vector2(1.5, 1.5)
+shape = SubResource("RectangleShape2D_2rddd")
+debug_color = Color(1, 0.478431, 0.145098, 0.419608)
+
+[node name="ItemPosition" type="Node2D" parent="."]
+position = Vector2(0, -17)
+
 [connection signal="area_entered" from="HurtArea" to="." method="UponHurt"]
 [connection signal="area_exited" from="HurtArea" to="." method="UponSafe"]
 [connection signal="animation_finished" from="AnimationTree" to="AnimationTree" method="AnimationFinished"]
 [connection signal="animation_started" from="AnimationTree" to="AnimationTree" method="AnimationStarted"]
+[connection signal="area_entered" from="PickArea" to="." method="ItemClose"]
+[connection signal="area_exited" from="PickArea" to="." method="ItemFar"]

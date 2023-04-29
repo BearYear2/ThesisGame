@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://7xpm66w4iuxn"]
+[gd_scene load_steps=35 format=3 uid="uid://7xpm66w4iuxn"]
 
 [ext_resource type="Script" path="res://Scripts/Actor.gd" id="1_b7ecp"]
 [ext_resource type="Texture2D" uid="uid://dss1rfiwlanu3" path="res://Assets/Puny-Characters/Soldier-Blue.png" id="2_mh15l"]
@@ -106,6 +106,9 @@ states/Walk/position = Vector2(307, -93)
 transitions = ["Dead", "End", SubResource("AnimationNodeStateMachineTransition_ydwb8"), "Hit", "Dead", SubResource("AnimationNodeStateMachineTransition_1dkuy"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_ffeq0"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_bvvbi"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_w6eup"), "Walk", "Hit", SubResource("AnimationNodeStateMachineTransition_7eni6"), "Walk", "Melee", SubResource("AnimationNodeStateMachineTransition_8uew4"), "Idle", "Melee", SubResource("AnimationNodeStateMachineTransition_r226f"), "Melee", "Walk", SubResource("AnimationNodeStateMachineTransition_dty6v"), "Melee", "Idle", SubResource("AnimationNodeStateMachineTransition_8bhnq"), "Idle", "Hit", SubResource("AnimationNodeStateMachineTransition_7mp7u"), "Melee", "Hit", SubResource("AnimationNodeStateMachineTransition_58rad"), "Hit", "Idle", SubResource("AnimationNodeStateMachineTransition_ca1p1")]
 graph_offset = Vector2(-330, -76)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_287gg"]
+size = Vector2(11, 11)
+
 [node name="Actor" type="CharacterBody2D" groups=["targetable"]]
 z_index = 1
 script = ExtResource("1_b7ecp")
@@ -113,7 +116,6 @@ script = ExtResource("1_b7ecp")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -3)
 shape = SubResource("RectangleShape2D_7r8m7")
-disabled = true
 debug_color = Color(0.792157, 0.803922, 0.788235, 0.615686)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -121,7 +123,7 @@ position = Vector2(0, -7)
 texture = ExtResource("2_mh15l")
 hframes = 24
 vframes = 8
-frame = 166
+frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -142,6 +144,10 @@ script = ExtResource("6_pugfu")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
 position = Vector2(0, -7)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_287gg")
+disabled = true
 
 [connection signal="animation_finished" from="AnimationTree" to="AnimationTree" method="AnimationFinished"]
 [connection signal="animation_started" from="AnimationTree" to="AnimationTree" method="AnimationStarted"]

@@ -29,7 +29,7 @@ position = Vector2(0, -1.5)
 
 [node name="Sprite2D" parent="." index="1"]
 texture = ExtResource("2_xb6fg")
-frame = 0
+frame = 1
 
 [node name="AnimationTree" parent="." index="3"]
 parameters/playback = SubResource("AnimationNodeStateMachinePlayback_4cyse")

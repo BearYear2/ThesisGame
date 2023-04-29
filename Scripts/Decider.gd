@@ -32,6 +32,10 @@ func InGroup(node:Node2D,groupName:String):
 	if node in get_tree().get_nodes_in_group(groupName):
 		result = true
 	return result
+	
+##########################
+####Finished functions####
+##########################
 func PursueTarget(actor:Node2D, target:Node2D, speed:float):
 	var targetGlobal = navigator.GetGlobalPosition(target)
 	navigationSpeed = speed
@@ -40,7 +44,6 @@ func PursueTarget(actor:Node2D, target:Node2D, speed:float):
 	#################################
 	### look into the demo with astargrid2d, adapt code from there
 	#################################
-	#if actor.position.direction_to(targetGlobal) >:
 	if Agent.get_target_position() != targetGlobal:
 		Agent.set_target_position(targetGlobal)
 		
@@ -48,49 +51,46 @@ func PursueTarget(actor:Node2D, target:Node2D, speed:float):
 	if arrived == 0:
 		actor.moveDir = Vector2.ZERO
 	return arrived
-
 func Patrol(actor:Node2D,speed:float,point:Node2D = null):
 	var patrolPoint = point
 	if not point and PatrolPoints:
 		var pointCount = PatrolPoints.size()
 		patrolPoint = PatrolPoints[randi()%pointCount]
 		print(patrolPoint.name)
-	
+func Die(actor:Node2D):
+	actor.death()
+
+
+##########################
+###UnFinished functions###
+##########################
 enum AttackType{Melee,Ranged,Magic}
 func Attack(actor:Node2D,target:Node2D,type:AttackType = AttackType.Melee):
-	actor.animState.travel("Attack")
-
-func Die(actor:Node2D):
-	actor.animState.travel("Sleep")
-	#actor.disable()
+	#actor.animState.travel("Attack")
+	pass
 
 func PickUp(actor:Node2D,item:Node2D):
 	#actor.animState.travel("")
 	pass
-	
+func GetHit(actor:Node2D):
+	actor.animState.travel("Hit")
+############################
+###Optional Functionality###
+############################
 func Sleep(actor:Node2D,time:float):
 	actor.animState.travel("Sleep")
-	
 func Forget(actor:Node2D):
 	actor.animState.travel("Sleep")
 	Spin(actor,15.0)
-	
 func Spin(actor:Node2D,time:float):
 	pass
-	
-func GetHit(actor:Node2D):
-	actor.animState.travel("Hit")
-	
 func DissapearIntoTheGround(actor:Node2D):
 	actor.animState.travel("Dead")
 	#actor.position.zinded
-
 func Ascend(actor:Node2D,time:float):
 	pass
-
 func TalkTo(actor:Node2D,target:Node2D):
 	actor.animState.travel("Hit")
-	
 func Trade(actor:Node2D,item:Node2D):
 	pass
 

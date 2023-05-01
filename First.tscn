@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://i7hksoyfaioo"]
+[gd_scene load_steps=10 format=3 uid="uid://i7hksoyfaioo"]
 
 [ext_resource type="Script" path="res://Scripts/camera.gd" id="1_bhu0i"]
 [ext_resource type="TileSet" uid="uid://emfgfsoijive" path="res://TileSetGrass.tres" id="1_c8yof"]
@@ -6,14 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://7xpm66w4iuxn" path="res://Actor.tscn" id="3_1h875"]
 [ext_resource type="Script" path="res://Scripts/A+Grid.gd" id="3_x2oc3"]
 [ext_resource type="PackedScene" uid="uid://bv1c42tdh7v4r" path="res://BadActor.tscn" id="4_0jhi1"]
+[ext_resource type="PackedScene" uid="uid://c2iblrynf7qjm" path="res://item.tscn" id="4_ysse5"]
 [ext_resource type="PackedScene" uid="uid://dabixbtvararm" path="res://Chicken.tscn" id="7_h60fy"]
-[ext_resource type="Texture2D" uid="uid://82kamv2csgty" path="res://Assets/crafting_materials/resources_basic.png" id="8_f0llr"]
-[ext_resource type="Script" path="res://Item.gd" id="9_kqbmc"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_efi75"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_p5dn8"]
-radius = 16.0
 
 [node name="Node2D" type="Node2D"]
 
@@ -48,6 +44,23 @@ layer_1/y_sort_origin = 0
 layer_1/z_index = 0
 layer_1/tile_data = PackedInt32Array(3211360, 458752, 12, 3276896, 458752, 13, 3342432, 458752, 14, 3407968, 458752, 15, 3211361, 524288, 12, 3276897, 524288, 13, 3342433, 524288, 14, 3407969, 524288, 15, 3539035, 262144, 13, 3604571, 262144, 14, 3670107, 262144, 15, 3473500, 327680, 12, 3539036, 327680, 13, 3604572, 327680, 14, 3670108, 327680, 15, 3473501, 393216, 12, 3539037, 393216, 13, 3604573, 393216, 14, 3670109, 393216, 15, 3801187, 589824, 15, 3866723, 589824, 16, 3539038, 393216, 16, 3539040, 393216, 16, 3539042, 393216, 16, 3539044, 393216, 16, 3604578, 393216, 16, 3604577, 393216, 16, 3604574, 393216, 16, 3670110, 393216, 16, 3670111, 393216, 16, 3670112, 393216, 16, 3670114, 393216, 16, 3670116, 393216, 16, 3735649, 393216, 16, 3735647, 393216, 16, 3735646, 393216, 16, 3801182, 393216, 16, 3801184, 393216, 16, 3801185, 393216, 16, 3801188, 393216, 16, 3932257, 524288, 16, 3932258, 524288, 16, 3932260, 524288, 16, 3997796, 524288, 16, 3997794, 524288, 16, 3997793, 524288, 16, 3997792, 524288, 16, 3997791, 524288, 16, 3997790, 524288, 16, 3997789, 524288, 16, 3997788, 524288, 16, 3997787, 524288, 16, 3932251, 524288, 16, 3932252, 524288, 16, 3866717, 524288, 16, 3866719, 524288, 16, 3866720, 524288, 16, 3866721, 524288, 16, 3866724, 524288, 16, 3866715, 524288, 16, 3801179, 524288, 16, 3735645, 524288, 16, 3735644, 524288, 16, 3342431, 65536, 19, 3407967, 65536, 20, 3342430, 65536, 19, 3407966, 65536, 20, 3342429, 65536, 19, 3407965, 65536, 20, 3342428, 65536, 19, 3407964, 65536, 20, 3342427, 65536, 19, 3407963, 65536, 20, 3342426, 65536, 19, 3407962, 65536, 20, 1507455, 0, 12, 1572991, 0, 13, 1638527, 0, 14, 1704063, 0, 15, 1507456, 65536, 12, 1572992, 65536, 13, 1638528, 65536, 14, 1704064, 65536, 15, 1507457, 131072, 12, 1572993, 131072, 13, 1638529, 131072, 14, 1704065, 131072, 15, 1507458, 196608, 12, 1572994, 196608, 13, 1638530, 196608, 14, 1704066, 196608, 15, 1507459, 0, 12, 1572995, 0, 13, 1638531, 0, 14, 1704067, 0, 15, 1507460, 65536, 12, 1572996, 65536, 13, 1638532, 65536, 14, 1704068, 65536, 15, 1507461, 131072, 12, 1572997, 131072, 13, 1638533, 131072, 14, 1704069, 131072, 15, 1507462, 196608, 12, 1572998, 196608, 13, 1638534, 196608, 14, 1704070, 196608, 15, 2031736, 131072, 19, 2097272, 131072, 20, 2031741, 0, 19, 2097277, 0, 20, 1769579, 458752, 12, 1769580, 524288, 12, 1769583, 458752, 12, 1835119, 458752, 13, 1900655, 458752, 14, 1966191, 458752, 15, 1769584, 524288, 12, 1835120, 524288, 13, 1900656, 524288, 14, 1966192, 524288, 15, 131152, 458752, 12, 196688, 458752, 13, 262224, 458752, 14, 327760, 458752, 15, 131153, 524288, 12, 196689, 524288, 13, 262225, 524288, 14, 327761, 524288, 15, 393226, 458752, 12, 458762, 458752, 13, 524298, 458752, 14, 589834, 458752, 15, 393227, 524288, 12, 458763, 524288, 13, 524299, 524288, 14, 589835, 524288, 15, 4194334, 458752, 12, 4259870, 458752, 13, 4325406, 458752, 14, 4390942, 458752, 15, 4194335, 524288, 12, 4259871, 524288, 13, 4325407, 524288, 14, 4390943, 524288, 15, 2883712, 589824, 15, 2949248, 589824, 16, 1769526, 262144, 13, 1835062, 262144, 14, 1900598, 262144, 15, 1703991, 327680, 12, 1769527, 327680, 13, 1835063, 327680, 14, 1900599, 327680, 15, 1703992, 393216, 12, 1769528, 393216, 13, 1835064, 393216, 14, 1900600, 393216, 15, 2097273, 327680, 16, 2097275, 327680, 16, 1376386, 393216, 6, 1376387, 458752, 6, 1376388, 524288, 6, 1310852, 524288, 5, 1310850, 393216, 5, 1441921, 393216, 6, 1441922, 458752, 6, 1441923, 458752, 6, 1441924, 393216, 9, 1441925, 524288, 6, 1376389, 524288, 5, 1310853, 524288, 5, 1310849, 393216, 5, 1376385, 393216, 5, 1310851, 458752, 9, 1245313, 458752, 7, 1245317, 393216, 7, 1245316, 524288, 5, 1245314, 393216, 5, 1245318, 393216, 9, 1245312, 458752, 11, 1245311, 393216, 11, 1245319, 524288, 11, 1179778, 589824, 10, 1179780, 720896, 10, 1179779, 655360, 10, 3538966, 393216, 16, 1376331, 131072, 18, 1441866, 65536, 18, 1441868, 0, 18, 1441867, 327680, 16, 1900615, 131072, 16, 1966150, 65536, 16, 1835080, 65536, 16, 1900617, 0, 16, 1966152, 0, 16, 1900618, 0, 19, 1966154, 0, 20, 1835077, 196608, 16, 1835078, 262144, 16, 1966151, 327680, 16)
 script = ExtResource("3_x2oc3")
+
+[node name="DeliveryPoints" type="Node2D" parent="NavigationRegion2D/TileMap"]
+
+[node name="FirstTower_Delivery" type="Marker2D" parent="NavigationRegion2D/TileMap/DeliveryPoints" groups=["delivery"]]
+position = Vector2(231, 145)
+
+[node name="SecondTower_Delivery" type="Marker2D" parent="NavigationRegion2D/TileMap/DeliveryPoints" groups=["delivery"]]
+position = Vector2(1296, 118)
+
+[node name="ThirdTower_Delivery" type="Marker2D" parent="NavigationRegion2D/TileMap/DeliveryPoints" groups=["delivery"]]
+position = Vector2(1793, 502)
+
+[node name="FourthTower_Delivery" type="Marker2D" parent="NavigationRegion2D/TileMap/DeliveryPoints" groups=["delivery"]]
+position = Vector2(1575, 854)
+
+[node name="FifthTower_Delivery" type="Marker2D" parent="NavigationRegion2D/TileMap/DeliveryPoints" groups=["delivery"]]
+position = Vector2(498, 1110)
 
 [node name="TestTile" type="Polygon2D" parent="NavigationRegion2D/TileMap"]
 visible = false
@@ -93,23 +106,37 @@ position = Vector2(231, 145)
 [node name="UnfinishedRoadTop" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(488, 38)
 
+[node name="Item" parent="NavigationRegion2D/TileMap/PatrolPoints/UnfinishedRoadTop" instance=ExtResource("4_ysse5")]
+
 [node name="LakeBismuth" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(248, 281)
+
+[node name="Item" parent="NavigationRegion2D/TileMap/PatrolPoints/LakeBismuth" instance=ExtResource("4_ysse5")]
 
 [node name="CentralRegion" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(567, 391)
 
+[node name="Item" parent="NavigationRegion2D/TileMap/PatrolPoints/CentralRegion" instance=ExtResource("4_ysse5")]
+
 [node name="ManMadeIsland" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(1114, 375)
+
+[node name="Item" parent="NavigationRegion2D/TileMap/PatrolPoints/ManMadeIsland" instance=ExtResource("4_ysse5")]
 
 [node name="LakeSaucerTop" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(759, 184)
 
+[node name="Item" parent="NavigationRegion2D/TileMap/PatrolPoints/LakeSaucerTop" instance=ExtResource("4_ysse5")]
+
 [node name="NilCrossroad" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(536, 40)
 
+[node name="Item" parent="NavigationRegion2D/TileMap/PatrolPoints/NilCrossroad" instance=ExtResource("4_ysse5")]
+
 [node name="ForgottenRoad" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(824, 56)
+
+[node name="Item" parent="NavigationRegion2D/TileMap/PatrolPoints/ForgottenRoad" instance=ExtResource("4_ysse5")]
 
 [node name="SecondTower" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(1296, 118)
@@ -117,17 +144,25 @@ position = Vector2(1296, 118)
 [node name="LumberJack\'sRoad" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(1384, 504)
 
+[node name="Item" parent="NavigationRegion2D/TileMap/PatrolPoints/LumberJack\'sRoad" instance=ExtResource("4_ysse5")]
+
 [node name="ThirdTower" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(1793, 502)
 
 [node name="NeleighVillage" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(2099, 439)
 
+[node name="Item" parent="NavigationRegion2D/TileMap/PatrolPoints/NeleighVillage" instance=ExtResource("4_ysse5")]
+
 [node name="Roger\'sHouse" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(2008, 504)
 
+[node name="Item" parent="NavigationRegion2D/TileMap/PatrolPoints/Roger\'sHouse" instance=ExtResource("4_ysse5")]
+
 [node name="Timmothy\'sHouse" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(1928, 536)
+
+[node name="Item" parent="NavigationRegion2D/TileMap/PatrolPoints/Timmothy\'sHouse" instance=ExtResource("4_ysse5")]
 
 [node name="FourthTower" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(1575, 854)
@@ -135,8 +170,12 @@ position = Vector2(1575, 854)
 [node name="CemeteryEscape" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(1448, 983)
 
+[node name="Item" parent="NavigationRegion2D/TileMap/PatrolPoints/CemeteryEscape" instance=ExtResource("4_ysse5")]
+
 [node name="CemeteryCrossroad" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(1191, 838)
+
+[node name="Item" parent="NavigationRegion2D/TileMap/PatrolPoints/CemeteryCrossroad" instance=ExtResource("4_ysse5")]
 
 [node name="FifthTower" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(498, 1110)
@@ -144,29 +183,47 @@ position = Vector2(498, 1110)
 [node name="LumberJacks\'Paradise" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(790, 792)
 
+[node name="Item" parent="NavigationRegion2D/TileMap/PatrolPoints/LumberJacks\'Paradise" instance=ExtResource("4_ysse5")]
+
 [node name="SaintHelen\'sChurch" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(888, 418)
+
+[node name="Item" parent="NavigationRegion2D/TileMap/PatrolPoints/SaintHelen\'sChurch" instance=ExtResource("4_ysse5")]
 
 [node name="StHelenCrossroad" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(922, 648)
 
+[node name="Item" parent="NavigationRegion2D/TileMap/PatrolPoints/StHelenCrossroad" instance=ExtResource("4_ysse5")]
+
 [node name="GreatForestStraights" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(218, 663)
+
+[node name="Item" parent="NavigationRegion2D/TileMap/PatrolPoints/GreatForestStraights" instance=ExtResource("4_ysse5")]
 
 [node name="Johnny\'sGrave" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(360, 889)
 
+[node name="Item" parent="NavigationRegion2D/TileMap/PatrolPoints/Johnny\'sGrave" instance=ExtResource("4_ysse5")]
+
 [node name="BottomOfTheWorld" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(727, 1206)
+
+[node name="Item" parent="NavigationRegion2D/TileMap/PatrolPoints/BottomOfTheWorld" instance=ExtResource("4_ysse5")]
 
 [node name="TheGreatDeforestation" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(1138, 1016)
 
+[node name="Item" parent="NavigationRegion2D/TileMap/PatrolPoints/TheGreatDeforestation" instance=ExtResource("4_ysse5")]
+
 [node name="UpcomingDeforestation2" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(1063, 917)
 
+[node name="Item" parent="NavigationRegion2D/TileMap/PatrolPoints/UpcomingDeforestation2" instance=ExtResource("4_ysse5")]
+
 [node name="SnakeOilHell" type="Marker2D" parent="NavigationRegion2D/TileMap/PatrolPoints" groups=["points"]]
 position = Vector2(403, 520)
+
+[node name="Item" parent="NavigationRegion2D/TileMap/PatrolPoints/SnakeOilHell" instance=ExtResource("4_ysse5")]
 
 [node name="Debug" type="Polygon2D" parent="NavigationRegion2D"]
 visible = false
@@ -183,8 +240,17 @@ position = Vector2(669, 357)
 [node name="Bad" parent="." instance=ExtResource("4_0jhi1")]
 position = Vector2(668, 455)
 
+[node name="Bad3" parent="." instance=ExtResource("4_0jhi1")]
+position = Vector2(772, 520)
+
+[node name="Bad4" parent="." instance=ExtResource("4_0jhi1")]
+position = Vector2(949, 518)
+
+[node name="Bad5" parent="." instance=ExtResource("4_0jhi1")]
+position = Vector2(1243, 351)
+
 [node name="Bad2" parent="." instance=ExtResource("4_0jhi1")]
-position = Vector2(821, 408)
+position = Vector2(1239, 406)
 
 [node name="Chicekn" parent="." instance=ExtResource("7_h60fy")]
 
@@ -232,18 +298,5 @@ position = Vector2(1957, 485)
 
 [node name="Chicekn16" parent="." instance=ExtResource("7_h60fy")]
 position = Vector2(1437, 419)
-
-[node name="Item" type="Sprite2D" parent="."]
-position = Vector2(582, 389)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("8_f0llr")
-hframes = 11
-vframes = 11
-script = ExtResource("9_kqbmc")
-
-[node name="Item" type="Area2D" parent="Item"]
-
-[node name="Shape" type="CollisionShape2D" parent="Item/Item"]
-shape = SubResource("CircleShape2D_p5dn8")
 
 [connection signal="item_clicked" from="camera/entityList" to="camera" method="OnItemClicked"]

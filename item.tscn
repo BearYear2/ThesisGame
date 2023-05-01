@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://c2iblrynf7qjm"]
+
+[ext_resource type="Texture2D" uid="uid://82kamv2csgty" path="res://Assets/crafting_materials/resources_basic.png" id="1_foc66"]
+[ext_resource type="Script" path="res://Item.gd" id="2_px35g"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_p5dn8"]
+radius = 52.0384
+
+[node name="Item" type="Sprite2D"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_foc66")
+hframes = 11
+vframes = 11
+script = ExtResource("2_px35g")
+
+[node name="Item" type="Area2D" parent="."]
+
+[node name="Shape" type="CollisionShape2D" parent="Item"]
+shape = SubResource("CircleShape2D_p5dn8")

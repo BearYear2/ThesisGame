@@ -9,17 +9,14 @@ extends Node2D
 #navigation related variables
 @onready var navigator = get_node("../Navigator")
 @onready var navAgent = get_node("../NavAgent2D")
-#another cheeky code duplication
 @onready var astarAgent :Node = get_node("../AStarAgent2D")
 @export var navigationSpeed = 50
 enum NavMode {NavAgent,AStar}
 @export var NavigationMode:NavMode = NavMode.NavAgent
 
-@onready var finiteAI = get_node("FiniteStateMachine")
-@onready var behaveAI = get_node("BehaviourTree")
 enum AiMode {Simple,FSM,BT}
 @export var ThinkingMode: AiMode = AiMode.Simple
-var hostile = false
+#var hostile = false
 
 @onready var PatrolPoints = get_tree().get_nodes_in_group("points")
 @onready var DeliveryPoints = get_tree().get_nodes_in_group("delivery")
@@ -54,12 +51,12 @@ func PursueTarget(actor:Node2D, target:Node2D, speed:float):
 	if arrived == 0:
 		actor.moveDir = Vector2.ZERO
 	return arrived
-func Patrol(actor:Node2D,speed:float,point:Node2D = null):
-	var patrolPoint = point
-	if not point and PatrolPoints:
-		var pointCount = PatrolPoints.size()
-		patrolPoint = PatrolPoints[randi()%pointCount]
-		print(patrolPoint.name)
+#func Patrol(actor:Node2D,speed:float,point:Node2D = null):
+#	var patrolPoint = point
+#	if not point and PatrolPoints:
+#		var pointCount = PatrolPoints.size()
+#		patrolPoint = PatrolPoints[randi()%pointCount]
+#		print(patrolPoint.name)
 
 func Die(actor:Node2D):
 	actor.death()
@@ -70,7 +67,7 @@ func Die(actor:Node2D):
 ##########################
 #enum AttackType{Melee,Ranged,Magic}
 #add some delay to attacks
-func Attack(actor:Node2D,target:Node2D):#,type:AttackType = AttackType.Melee):
+func Attack(actor:Node2D,_target:Node2D):#,type:AttackType = AttackType.Melee):
 	actor.animationTree.playAnimation("Melee",actor.moveDir)
 
 func Alert(actor:Node2D, groupName:String = "targetable"):
@@ -85,22 +82,22 @@ func Alert(actor:Node2D, groupName:String = "targetable"):
 ############################
 ###Optional Functionality###
 ############################
-func Sleep(actor:Node2D,time:float):
-	actor.animState.travel("Sleep")
-func Forget(actor:Node2D):
-	actor.animState.travel("Sleep")
-	Spin(actor,15.0)
-func Spin(actor:Node2D,time:float):
-	pass
-func DissapearIntoTheGround(actor:Node2D):
-	actor.animState.travel("Dead")
-	#actor.position.zinded
-func Ascend(actor:Node2D,time:float):
-	pass
-func TalkTo(actor:Node2D,target:Node2D):
-	actor.animState.travel("Hit")
-func Trade(actor:Node2D,item:Node2D):
-	pass
+#func Sleep(actor:Node2D,time:float):
+#	actor.animState.travel("Sleep")
+#func Forget(actor:Node2D):
+#	actor.animState.travel("Sleep")
+#	Spin(actor,15.0)
+#func Spin(actor:Node2D,time:float):
+#	pass
+#func DissapearIntoTheGround(actor:Node2D):
+#	actor.animState.travel("Dead")
+#	#actor.position.zinded
+#func Ascend(actor:Node2D,time:float):
+#	pass
+#func TalkTo(actor:Node2D,target:Node2D):
+#	actor.animState.travel("Hit")
+#func Trade(actor:Node2D,item:Node2D):
+#	pass
 
 
 #simple Ai is done internally
@@ -232,11 +229,12 @@ func UponSeeingSomething(body : Node2D):
 			#since blackboard is a dictionary, and dictionaries are passed around
 			#by reference, then this means that this change would be reflected
 			#everywhere else
-			if worldState["canBeAfraid"] and worldState["afraid"]:
-				hostile = false
-			else:
-				hostile = true
-				worldState["target"] = body
+			#if worldState["canBeAfraid"] and worldState["afraid"]:
+			#	hostile = false
+			#else:
+			#	hostile = true
+			#	worldState["target"] = body
+			worldState["target"] = body
 	elif InGroup(body,"targetable"):
 		print("we meet again")
 		if PatrolPoints:
@@ -256,5 +254,5 @@ func UponLosingSight(body:Node2D):
 	#sometimes, in debug, an error would be fired when stopping
 	if get_tree():
 		if body in get_tree().get_nodes_in_group("targetable"):
-			if body.player and not worldState.get("hasItem") and not hostile:
+			if body.player and not worldState.get("hasItem"):# and not hostile:
 				worldState["target"] = null

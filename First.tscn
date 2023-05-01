@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/camera.gd" id="1_bhu0i"]
 [ext_resource type="TileSet" uid="uid://emfgfsoijive" path="res://TileSetGrass.tres" id="1_c8yof"]
 [ext_resource type="TileSet" uid="uid://d1wwpsy1eadwq" path="res://CuteNpcs.tres" id="2_h0fnu"]
-[ext_resource type="PackedScene" uid="uid://7xpm66w4iuxn" path="res://Actor.tscn" id="3_1h875"]
+[ext_resource type="PackedScene" uid="uid://dvvop76uv40pf" path="res://Actor.tscn" id="3_1h875"]
 [ext_resource type="Script" path="res://Scripts/A+Grid.gd" id="3_x2oc3"]
 [ext_resource type="PackedScene" uid="uid://bv1c42tdh7v4r" path="res://BadActor.tscn" id="4_0jhi1"]
 [ext_resource type="PackedScene" uid="uid://c2iblrynf7qjm" path="res://item.tscn" id="4_ysse5"]
@@ -27,6 +27,9 @@ offset_right = -149.0
 offset_bottom = -66.0
 max_text_lines = 2
 auto_height = true
+
+[node name="AudioListener2D" type="AudioListener2D" parent="camera"]
+current = true
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_efi75")

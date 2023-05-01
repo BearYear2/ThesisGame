@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=3 uid="uid://bv1c42tdh7v4r"]
 
-[ext_resource type="PackedScene" uid="uid://7xpm66w4iuxn" path="res://Actor.tscn" id="1_qs8sw"]
+[ext_resource type="PackedScene" uid="uid://dvvop76uv40pf" path="res://Actor.tscn" id="1_qs8sw"]
 [ext_resource type="Script" path="res://Scripts/Decider.gd" id="3_7c25g"]
 [ext_resource type="Script" path="res://Idle.gd" id="4_n13im"]
 [ext_resource type="Script" path="res://Patrol.gd" id="5_2k442"]
@@ -29,6 +29,9 @@ radius = 80.0
 [node name="Bad" instance=ExtResource("1_qs8sw")]
 speed = 50.0
 player = false
+
+[node name="Model" parent="." index="2"]
+frame = 0
 
 [node name="Sensor" type="Node2D" parent="." index="4"]
 

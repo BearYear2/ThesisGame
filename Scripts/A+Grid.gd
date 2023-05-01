@@ -67,7 +67,6 @@ func _ready():
 	grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
 	grid.update()
 	
-	var cells = get_used_cells(AStarLayer)
 	for x in rect.x:
 		for y in rect.y:
 			var pos = Vector2i(x,y)

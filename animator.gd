@@ -38,13 +38,13 @@ func _ready():
 	playAnimation("Idle",Vector2.UP)
 
 
-func AnimationFinished(anim_name):
+func AnimationFinished(_anim_name):
 	started = false
 	finished = true
 	#print("FINISHED",anim_name)
 
 
-func AnimationStarted(anim_name):
+func AnimationStarted(_anim_name):
 	started = true
 	finished = false
 	#print("STARTED",anim_name)

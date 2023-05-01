@@ -12,6 +12,9 @@ extends CharacterBody2D
 #Animation
 @onready var animationTree = $AnimationTree
 
+#Sound
+@onready var footsteps = $Sounds/Walk
+@onready var attack = $Sounds/Attack
 
 #AI specifics
 @export var player:bool = true
@@ -66,6 +69,7 @@ func _ready():
 		var camera2D = get_parent().get_node("camera").get_path()
 		remTran.set_remote_node(camera2D)
 	else:
+		#dead = true
 		if randi_range(0,10) >= 5:
 			canBeAfraid = true
 	#blackboard["target"] = groupMembers[0]
@@ -85,7 +89,7 @@ func itemUnPick():
 		print("bye")
 		item.position += Vector2(randf_range(0,1.0),randf_range(0,1.0))
 		item.reparent(get_parent())
-		var coll:CollisionShape2D = item.find_child("CollisionBox")
+		#var coll:CollisionShape2D = item.find_child("CollisionBox")
 		#if coll:
 		#	coll.disabled = false
 		hasItem = false
@@ -96,7 +100,7 @@ func itemProcess():
 	pass
 
 
-func player_process(delta):
+func player_process(_delta):
 	#take advantage of the fact that the values are clamped between [-1,1]
 	var horizontal = Input.get_action_strength("Right") - Input.get_action_strength("Left")
 	var vertical = Input.get_action_strength("Down") - Input.get_action_strength("Up")
@@ -105,8 +109,13 @@ func player_process(delta):
 		#you cannot attack whilst holding an item
 		if !hasItem:
 			animationTree.playAnimation("Melee",moveDir)
-			#need some sort of timer for PickUp and UnPick
 			itemPickUp()
+			#maybe play this using the animation player?
+			#since it's a very specific sound?
+			await get_tree().create_timer(0.2).timeout
+			if not attack.playing:
+				attack.play()
+			#need some sort of timer for PickUp and UnPick
 	if Input.get_action_raw_strength("Alternative"):
 		if hasItem:
 			itemUnPick()
@@ -122,9 +131,7 @@ func ai_process(delta):
 	blackboard["afraid"] = afraid
 	decider.think(self,blackboard)
 	
-func no_process(delta):
-	pass
-	
+
 func _physics_process(delta):
 	if health <=0:
 		death()
@@ -137,6 +144,8 @@ func _physics_process(delta):
 			animationTree.playAnimation("Hit",moveDir)
 		if moveDir != Vector2.ZERO:
 			animationTree.playAnimation("Walk",moveDir)
+			if not footsteps.playing:
+				footsteps.play()
 			lastDir = moveDir
 		else:
 			animationTree.playAnimation("Idle",lastDir)

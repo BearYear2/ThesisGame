@@ -2,6 +2,9 @@
 #NavMode is an internal process, not always conscious
 #AiMode is the cognitive part, the active thinking making use of all resources
 
+
+#this class would benefit some refactoring
+
 extends Node2D
 #navigation related variables
 @onready var navigator = get_node("../Navigator")
@@ -12,14 +15,14 @@ extends Node2D
 enum NavMode {NavAgent,AStar}
 @export var NavigationMode:NavMode = NavMode.NavAgent
 
-#a little cheeky code duplication
-@onready var simpleAI = get_node("SimpleAi")
 @onready var finiteAI = get_node("FiniteStateMachine")
 @onready var behaveAI = get_node("BehaviourTree")
 enum AiMode {Simple,FSM,BT}
 @export var ThinkingMode: AiMode = AiMode.Simple
+var hostile = false
 
 @onready var PatrolPoints = get_tree().get_nodes_in_group("points")
+@onready var DeliveryPoints = get_tree().get_nodes_in_group("delivery")
 
 var worldState: Dictionary = Dictionary()
 
@@ -57,6 +60,7 @@ func Patrol(actor:Node2D,speed:float,point:Node2D = null):
 		var pointCount = PatrolPoints.size()
 		patrolPoint = PatrolPoints[randi()%pointCount]
 		print(patrolPoint.name)
+
 func Die(actor:Node2D):
 	actor.death()
 
@@ -69,10 +73,15 @@ func Die(actor:Node2D):
 func Attack(actor:Node2D,target:Node2D):#,type:AttackType = AttackType.Melee):
 	actor.animationTree.playAnimation("Melee",actor.moveDir)
 
-func PickUp(actor:Node2D,item:Node2D):
+func Alert(actor:Node2D, groupName:String = "targetable"):
+	#we alert everyone of our current target
+	for node in get_tree().get_nodes_in_group(groupName):
+		node.worldState["target"] = worldState["target"]
+#use the actor function, much more easier to use for the time being
+#func PickUp(actor:Node2D,item:Node2D):
 	#actor.animState.travel("")
 	#functionality already existend in Actor.gd
-	pass
+#	pass
 ############################
 ###Optional Functionality###
 ############################
@@ -95,37 +104,115 @@ func Trade(actor:Node2D,item:Node2D):
 
 
 #simple Ai is done internally
-func simple(actor,blackboard):
+#we could also say that this is a simple form of decision trees
+
+#TemporaryHelperFunctions
+#TakingDamage and Dead are handled by the actor on it's own
+#Call it a sort of reflexive action, so I don't need to switch into it
+func Idle(actor,blackboard):
+	blackboard["target"] = actor
+	await get_tree().create_timer(randf_range(1,10)).timeout
+
+func Pat(actor,blackboard):
 	if blackboard.get("target"):
-		#have we arrived close enough to our target?
 		if PursueTarget(actor,blackboard["target"], blackboard["speed"]) == 0:
-			#is thihs target 'targetable'?
-			if InGroup(blackboard["target"],"targetable"):
-				#is it a player?
-				if blackboard["target"].player:
-					Attack(actor,blackboard["target"])
-			else:
-				blackboard["target"] = null
+			Idle(actor,blackboard)
+			blackboard["target"] = null
 	else:
+		#Patrol
 		if PatrolPoints:
 			var pointCount = PatrolPoints.size()
 			var patrolPoint = PatrolPoints[randi()%pointCount]
 			blackboard["target"]= patrolPoint
 
-#finite state machine related activities are delegated to
-#the FiniteStateMachineNode
-func finite(actor,blackboard):
-	pass
+func Hunt(actor,blackboard):
+	if blackboard.get("target"):
+		#have we arrived close enough to our target?
+		#Patorl/Hunt
+		if PursueTarget(actor,blackboard["target"], blackboard["speed"]) == 0:
+			#is thihs target 'targetable'?
+			if InGroup(blackboard["target"],"targetable"):
+				#is it a player?
+				Attk(actor,blackboard)
 
-#finite state machine related activities are delegated to
-#the BehaviourTreeNode
+func Attk(actor,blackboard):
+	if blackboard["target"].player:
+		#Attack
+		Attack(actor,blackboard["target"])
+	if blackboard["target"].health <=0:
+		blackboard["target"] = null
+
+
+#add a sort of goal system, so that npc's can do more than just hunt the player
+#while patroling, if you find an item, pick it up, and deliver it to the closest tower
+#if you encounter another npc, you have to play a game of chicken, and the loser has to turn back
+#if you encounter something hostile, you have to run away, you can only drop items near the tower
+#if you have a chicken on you, you can still attack, but at a slower pace? but it is more valuable
+
+
+func simple(actor,blackboard):
+	if blackboard.get("itemClose") and not blackboard.get("hasItem"):
+		actor.itemPickUp()
+		if DeliveryPoints:
+			var deliveryPoint = DeliveryPoints[0]
+			var dist = actor.position.distance_to(deliveryPoint.position)
+			for devPts in DeliveryPoints:
+				if actor.position.distance_to(devPts.position) < dist:
+					deliveryPoint = devPts
+					dist = actor.position.distance_to(deliveryPoint.position)
+			blackboard["target"]= deliveryPoint
+	#Idk what to do with this
+	if blackboard.get("hasItem"):
+		pass
+	
+	if blackboard.get("target"):
+		#have we arrived close enough to our target?
+		#Patorl/Hunt
+		if PursueTarget(actor,blackboard["target"], blackboard["speed"]) == 0:
+			#is thihs target 'targetable'?
+			if blackboard.get("hasItem") and InGroup(blackboard["target"],"delivery"):
+				actor.itemUnPick()
+			if InGroup(blackboard["target"],"targetable"):
+				#is it a player?
+				if blackboard["target"].player and not blackboard.get("hasItem"):
+					#Attack
+					Attack(actor,blackboard["target"])
+				if blackboard["target"].health <=0:
+					blackboard["target"] = null
+			else:
+				#Idle
+				blackboard["target"] = actor
+				await get_tree().create_timer(randf_range(1,10)).timeout
+				blackboard["target"] = null
+	else:
+		#Patrol
+		if PatrolPoints:
+			var pointCount = PatrolPoints.size()
+			var patrolPoint = PatrolPoints[randi()%pointCount]
+			blackboard["target"]= patrolPoint
+
+enum States {Idle,Patrol,Hunt,Attack,Talk,DeliverItem}
+var currentState:States = States.Idle
+func finite(actor,blackboard):
+	match currentState:
+		States.Idle:pass
+		States.Patrol:pass
+		States.Hunt:pass
+		States.Attack:pass
+		States.Talk:pass
+		States.DeliverItem:pass
+
 func behave(actor,blackboard):
 	pass
+	#if talk:pass
+	#elif DeliverItem():pass
+	#elif Hunt():pass
+	#elif Patrol:pass
+	#else: Idle()
 
 func think(actor,blackboard):
-	var speed = blackboard["speed"]
-	var target = blackboard.get("target")
-	worldState["blackboard"] = blackboard
+	#both point to the same reference
+	worldState = blackboard
 	match ThinkingMode:
 		AiMode.Simple:
 			simple(actor,blackboard)
@@ -138,14 +225,25 @@ func think(actor,blackboard):
 
 #oh, this also works for touch, but we are not telling you which
 func UponSeeingSomething(body : Node2D):
-	if InGroup(body,"targetable"):
+	if InGroup(body,"targetable") and not worldState.get("hasItem"):
 		#we'll pick a fight with the player, or with anyone not on
 		#the godess' of luck side 
 		if body.player or randi() % 1000 >= 999:
 			#since blackboard is a dictionary, and dictionaries are passed around
 			#by reference, then this means that this change would be reflected
 			#everywhere else
-			worldState["blackboard"]["target"] = body
+			if worldState["canBeAfraid"] and worldState["afraid"]:
+				hostile = false
+			else:
+				hostile = true
+				worldState["target"] = body
+	elif InGroup(body,"targetable"):
+		print("we meet again")
+		if PatrolPoints:
+			var pointCount = PatrolPoints.size()
+			var patrolPoint = PatrolPoints[randi()%pointCount]
+			worldState["target"]= patrolPoint
+		
 
 func UponHearingSomething(body : Node2D):
 	#we will pass this body to the UponSeeingSomething function, except
@@ -157,5 +255,6 @@ func UponHearingSomething(body : Node2D):
 func UponLosingSight(body:Node2D):
 	#sometimes, in debug, an error would be fired when stopping
 	if get_tree():
-		if body in get_tree().get_nodes_in_group("targetable") and body.player:
-			worldState["blackboard"]["target"] = null
+		if body in get_tree().get_nodes_in_group("targetable"):
+			if body.player and not worldState.get("hasItem") and not hostile:
+				worldState["target"] = null

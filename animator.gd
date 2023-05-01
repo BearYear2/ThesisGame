@@ -10,7 +10,7 @@ var disabled: bool = false
 var allAnimationStates = [\
 	"Idle", "Walk", #interruptable
 	"Throw", "Ranged", "Melee", "Magic", #non-interruptable
-	"Hit", "Death"] #non-interruptable
+	"Hit", "Dead"] #non-interruptable
 var interruptableAnimations = ["Idle", "Walk"]
 func playAnimation(animName:String,animDir:Vector2):
 	if !disabled:
@@ -18,6 +18,9 @@ func playAnimation(animName:String,animDir:Vector2):
 		for animation in allAnimationStates:
 				animationName = animName
 				break
+		if animationName == "Dead":
+			animState.stop()
+			started = false
 		if animationName != "":
 			if !started  and currentAnimState != animName:
 					animState.stop()

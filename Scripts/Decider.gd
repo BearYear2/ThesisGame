@@ -14,7 +14,8 @@ extends Node2D
 enum NavMode {NavAgent,AStar}
 @export var NavigationMode:NavMode = NavMode.NavAgent
 
-enum AiMode {Simple,FSM,BT}
+
+enum AiMode {Simple,FSM}
 @export var ThinkingMode: AiMode = AiMode.Simple
 #var hostile = false
 
@@ -199,14 +200,6 @@ func finite(actor,blackboard):
 		States.Talk:pass
 		States.DeliverItem:pass
 
-func behave(actor,blackboard):
-	pass
-	#if talk:pass
-	#elif DeliverItem():pass
-	#elif Hunt():pass
-	#elif Patrol:pass
-	#else: Idle()
-
 func think(actor,blackboard):
 	#both point to the same reference
 	worldState = blackboard
@@ -215,10 +208,6 @@ func think(actor,blackboard):
 			simple(actor,blackboard)
 		AiMode.FSM:
 			finite(actor,blackboard)
-		AiMode.BT:
-			behave(actor,blackboard)
-	#if target != null:
-	#	PursueTarget(actor,target,speed)
 
 #oh, this also works for touch, but we are not telling you which
 func UponSeeingSomething(body : Node2D):

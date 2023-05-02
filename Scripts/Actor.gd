@@ -110,11 +110,6 @@ func player_process(_delta):
 		if !hasItem:
 			animationTree.playAnimation("Melee",moveDir)
 			itemPickUp()
-			#maybe play this using the animation player?
-			#since it's a very specific sound?
-			await get_tree().create_timer(0.2).timeout
-			if not attack.playing:
-				attack.play()
 			#need some sort of timer for PickUp and UnPick
 	if Input.get_action_raw_strength("Alternative"):
 		if hasItem:

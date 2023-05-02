@@ -109,12 +109,17 @@ func Alert(actor:Node2D, groupName:String = "targetable"):
 #Call it a sort of reflexive action, so I don't need to switch into it
 func Idle(actor,blackboard):
 	blackboard["target"] = actor
+	actor.moveDir = Vector2.ZERO
 	await get_tree().create_timer(randf_range(1,10)).timeout
+	currentState = States.Patrol
+	#blackboard["target"] = null
 
 func Pat(actor,blackboard):
 	if blackboard.get("target"):
+		if InGroup(blackboard["target"],"targetable"):
+			currentState = States.Hunt
 		if PursueTarget(actor,blackboard["target"], blackboard["speed"]) == 0:
-			Idle(actor,blackboard)
+			currentState = States.Idle
 			blackboard["target"] = null
 	else:
 		#Patrol
@@ -131,14 +136,20 @@ func Hunt(actor,blackboard):
 			#is thihs target 'targetable'?
 			if InGroup(blackboard["target"],"targetable"):
 				#is it a player?
-				Attk(actor,blackboard)
+				currentState = States.Attack
+			else:
+				currentState = States.Patrol
 
 func Attk(actor,blackboard):
 	if blackboard["target"].player:
 		#Attack
 		Attack(actor,blackboard["target"])
+	else:
+		currentState = States.Patrol
 	if blackboard["target"].health <=0:
 		blackboard["target"] = null
+	else:
+		currentState = States.Hunt
 
 
 #add a sort of goal system, so that npc's can do more than just hunt the player
@@ -193,10 +204,10 @@ enum States {Idle,Patrol,Hunt,Attack,Talk,DeliverItem}
 var currentState:States = States.Idle
 func finite(actor,blackboard):
 	match currentState:
-		States.Idle:pass
-		States.Patrol:pass
-		States.Hunt:pass
-		States.Attack:pass
+		States.Idle:Idle(actor,blackboard)
+		States.Patrol:Pat(actor,blackboard)
+		States.Hunt:Hunt(actor,blackboard)
+		States.Attack:Attk(actor,blackboard)
 		States.Talk:pass
 		States.DeliverItem:pass
 

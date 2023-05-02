@@ -30,6 +30,9 @@ radius = 80.0
 speed = 50.0
 player = false
 
+[node name="Model" parent="." index="2"]
+frame = 0
+
 [node name="Sensor" type="Node2D" parent="." index="4"]
 
 [node name="Sight" type="Area2D" parent="Sensor" index="0"]
@@ -52,6 +55,7 @@ shape = SubResource("CircleShape2D_87d76")
 [node name="Decider" type="Node2D" parent="." index="5"]
 script = ExtResource("3_7c25g")
 NavigationMode = 1
+ThinkingMode = 1
 
 [node name="FiniteStateMachine" type="Node2D" parent="Decider" index="0"]
 script = ExtResource("5_bj40d")

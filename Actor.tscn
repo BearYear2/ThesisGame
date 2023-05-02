@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://dvvop76uv40pf"]
+[gd_scene load_steps=40 format=3 uid="uid://dvvop76uv40pf"]
 
 [ext_resource type="Script" path="res://Scripts/Actor.gd" id="1_b7ecp"]
 [ext_resource type="Texture2D" uid="uid://dss1rfiwlanu3" path="res://Assets/Puny-Characters/Soldier-Blue.png" id="2_mh15l"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://animator.gd" id="6_pugfu"]
 [ext_resource type="AudioStream" uid="uid://bmj4yrn1woihr" path="res://Assets/sounds/walk/walk 3 slow.wav" id="9_kn2qo"]
 [ext_resource type="AudioStream" uid="uid://bod23ad6vvus0" path="res://Assets/sounds/attack/hit 3 strong attack.wav" id="10_hhmsa"]
+[ext_resource type="AudioStream" uid="uid://cbxyn074ecwo5" path="res://Assets/sounds/question.wav" id="11_5ipy8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5tq0x"]
 size = Vector2(14, 15)
@@ -180,16 +181,22 @@ position = Vector2(0, -17)
 
 [node name="Walk" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource("9_kn2qo")
-volume_db = -19.158
+volume_db = -15.0
 pitch_scale = 0.78
 max_distance = 300.0
-attenuation = 1.18921
+attenuation = 6.96442
 max_polyphony = 20
 
 [node name="Attack" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource("10_hhmsa")
 volume_db = -0.244
 pitch_scale = 2.59
+
+[node name="Hit" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("11_5ipy8")
+max_distance = 300.0
+attenuation = 1.51572
+max_polyphony = 4
 
 [connection signal="area_entered" from="HurtArea" to="." method="UponHurt"]
 [connection signal="area_exited" from="HurtArea" to="." method="UponSafe"]

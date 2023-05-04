@@ -107,6 +107,19 @@ func Alert(actor:Node2D, groupName:String = "targetable"):
 #TemporaryHelperFunctions
 #TakingDamage and Dead are handled by the actor on it's own
 #Call it a sort of reflexive action, so I don't need to switch into it
+func Talk(actor,blackboard):
+	pass
+func Deliver(actor,blackboard):
+	actor.itemPickUp()
+	if DeliveryPoints:
+		var deliveryPoint = DeliveryPoints[0]
+		var dist = actor.position.distance_to(deliveryPoint.position)
+		for devPts in DeliveryPoints:
+			if actor.position.distance_to(devPts.position) < dist:
+				deliveryPoint = devPts
+				dist = actor.position.distance_to(deliveryPoint.position)
+		blackboard["target"]= deliveryPoint
+		currentState = States.Patrol
 func Idle(actor,blackboard):
 	blackboard["target"] = actor
 	actor.moveDir = Vector2.ZERO
@@ -115,6 +128,8 @@ func Idle(actor,blackboard):
 	#blackboard["target"] = null
 
 func Pat(actor,blackboard):
+	if blackboard.get("itemClose") and not blackboard.get("hasItem"):
+		currentState = States.DeliverItem
 	if blackboard.get("target"):
 		if InGroup(blackboard["target"],"targetable"):
 			currentState = States.Hunt
@@ -129,12 +144,16 @@ func Pat(actor,blackboard):
 			blackboard["target"]= patrolPoint
 
 func Hunt(actor,blackboard):
+	if blackboard.get("itemClose") and not blackboard.get("hasItem"):
+		currentState = States.DeliverItem
 	if blackboard.get("target"):
 		#have we arrived close enough to our target?
 		#Patorl/Hunt
 		if PursueTarget(actor,blackboard["target"], blackboard["speed"]) == 0:
 			#is thihs target 'targetable'?
-			if InGroup(blackboard["target"],"targetable"):
+			if blackboard.get("hasItem") and InGroup(blackboard["target"],"delivery"):
+				actor.itemUnPick()
+			if InGroup(blackboard["target"],"targetable") and not blackboard.get("hasItem"):
 				#is it a player?
 				currentState = States.Attack
 			else:
@@ -171,8 +190,11 @@ func simple(actor,blackboard):
 					dist = actor.position.distance_to(deliveryPoint.position)
 			blackboard["target"]= deliveryPoint
 	#Idk what to do with this
-	if blackboard.get("hasItem"):
-		pass
+	#maybe avoid the player when you have an item
+	#if blackboard.get("hasItem") and :
+	#	pass 
+		
+		
 	
 	if blackboard.get("target"):
 		#have we arrived close enough to our target?
@@ -209,7 +231,7 @@ func finite(actor,blackboard):
 		States.Hunt:Hunt(actor,blackboard)
 		States.Attack:Attk(actor,blackboard)
 		States.Talk:pass
-		States.DeliverItem:pass
+		States.DeliverItem:Deliver(actor,blackboard)
 
 func think(actor,blackboard):
 	#both point to the same reference
@@ -221,26 +243,23 @@ func think(actor,blackboard):
 			finite(actor,blackboard)
 
 #oh, this also works for touch, but we are not telling you which
+var runningAway = false
 func UponSeeingSomething(body : Node2D):
-	if InGroup(body,"targetable") and not worldState.get("hasItem"):
+	if InGroup(body,"targetable"):
+		if not worldState.get("hasItem"):
 		#we'll pick a fight with the player, or with anyone not on
 		#the godess' of luck side 
-		if body.player or randi() % 1000 >= 999:
-			#since blackboard is a dictionary, and dictionaries are passed around
-			#by reference, then this means that this change would be reflected
-			#everywhere else
-			#if worldState["canBeAfraid"] and worldState["afraid"]:
-			#	hostile = false
-			#else:
-			#	hostile = true
-			#	worldState["target"] = body
-			worldState["target"] = body
-	elif InGroup(body,"targetable"):
-		print("we meet again")
-		if PatrolPoints:
-			var pointCount = PatrolPoints.size()
-			var patrolPoint = PatrolPoints[randi()%pointCount]
-			worldState["target"]= patrolPoint
+			if body.player or randi() % 1000 >= 999:
+				#since blackboard is a dictionary, and dictionaries are passed around
+				#by reference, then this means that this change would be reflected
+				#everywhere else
+				worldState["target"] = body
+		else:
+			if body.player and not runningAway: #or RequiresMyItem(body)
+				var deliveryPoint = DeliveryPoints[randi()%DeliveryPoints.size()]
+				worldState["target"]= deliveryPoint
+				runningAway = true
+	
 		
 
 func UponHearingSomething(body : Node2D):
@@ -256,3 +275,23 @@ func UponLosingSight(body:Node2D):
 		if body in get_tree().get_nodes_in_group("targetable"):
 			if body.player and not worldState.get("hasItem"):# and not hostile:
 				worldState["target"] = null
+
+
+func UponTouchingSomething(body):
+	if InGroup(body,"targetable"):
+		print("we meet again")
+		if PatrolPoints:
+			var pointCount = PatrolPoints.size()
+			var patrolPoint = PatrolPoints[randi()%pointCount]
+			worldState["target"]= patrolPoint
+
+
+func UponNoLongerTouching(body):
+	if not body.player:
+		runningAway = false
+	else:
+		if  not runningAway: #or RequiresMyItem(body)
+				var deliveryPoint = DeliveryPoints[randi()%DeliveryPoints.size()]
+				worldState["target"]= deliveryPoint
+				runningAway = true
+		

@@ -15,7 +15,7 @@ func _ready():
 	for i in get_tree().get_nodes_in_group("targetable"):
 		list.add_item(i.name)
 
-
+#TODO
 func OnItemClicked(index, at_position, mouse_button_index):
 	pass
 	#var entity = get_parent().get_node(list.get_item_text(index))

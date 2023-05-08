@@ -1,19 +1,9 @@
-[gd_scene load_steps=19 format=3 uid="uid://bv1c42tdh7v4r"]
+[gd_scene load_steps=9 format=3 uid="uid://bv1c42tdh7v4r"]
 
 [ext_resource type="PackedScene" uid="uid://dvvop76uv40pf" path="res://Actor.tscn" id="1_qs8sw"]
 [ext_resource type="Script" path="res://Scripts/Decider.gd" id="3_7c25g"]
-[ext_resource type="Script" path="res://Idle.gd" id="4_n13im"]
-[ext_resource type="Script" path="res://Patrol.gd" id="5_2k442"]
-[ext_resource type="Script" path="res://FiniteStateMachine.gd" id="5_bj40d"]
-[ext_resource type="Script" path="res://Hunt.gd" id="6_7o2e8"]
-[ext_resource type="Script" path="res://BehaviourTree.gd" id="6_s1r1e"]
 [ext_resource type="Script" path="res://Scripts/Navigator.gd" id="7_8stfh"]
-[ext_resource type="Script" path="res://Attack.gd" id="7_jp2yj"]
-[ext_resource type="Script" path="res://TakingDamage.gd" id="8_ln7uy"]
 [ext_resource type="Script" path="res://Scripts/A+Agent.gd" id="8_xxt7b"]
-[ext_resource type="Script" path="res://Dead.gd" id="9_1n4nn"]
-[ext_resource type="Script" path="res://Talk.gd" id="10_jx4bo"]
-[ext_resource type="Script" path="res://DeliverItem.gd" id="11_b8577"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8udur"]
 radius = 60.075
@@ -29,6 +19,9 @@ radius = 80.0
 [node name="Bad" instance=ExtResource("1_qs8sw")]
 speed = 50.0
 player = false
+
+[node name="Model" parent="." index="2"]
+frame = 0
 
 [node name="Sensor" type="Node2D" parent="." index="4"]
 
@@ -53,84 +46,6 @@ shape = SubResource("CircleShape2D_87d76")
 script = ExtResource("3_7c25g")
 NavigationMode = 1
 ThinkingMode = 1
-
-[node name="FiniteStateMachine" type="Node2D" parent="Decider" index="0"]
-script = ExtResource("5_bj40d")
-
-[node name="Idle" type="Node" parent="Decider/FiniteStateMachine" index="0"]
-script = ExtResource("4_n13im")
-
-[node name="Patrol" type="Node" parent="Decider/FiniteStateMachine" index="1"]
-script = ExtResource("5_2k442")
-
-[node name="Hunt" type="Node" parent="Decider/FiniteStateMachine" index="2"]
-script = ExtResource("6_7o2e8")
-
-[node name="Attack" type="Node" parent="Decider/FiniteStateMachine" index="3"]
-script = ExtResource("7_jp2yj")
-
-[node name="TakingDamage" type="Node" parent="Decider/FiniteStateMachine" index="4"]
-script = ExtResource("8_ln7uy")
-
-[node name="Dead" type="Node" parent="Decider/FiniteStateMachine" index="5"]
-script = ExtResource("9_1n4nn")
-
-[node name="Talk" type="Node" parent="Decider/FiniteStateMachine" index="6"]
-script = ExtResource("10_jx4bo")
-
-[node name="DeliverItem" type="Node" parent="Decider/FiniteStateMachine" index="7"]
-script = ExtResource("11_b8577")
-
-[node name="BehaviourTree" type="Node2D" parent="Decider" index="1"]
-script = ExtResource("6_s1r1e")
-
-[node name="Sel_Activities" type="Node" parent="Decider/BehaviourTree" index="0"]
-
-[node name="Die" type="Node" parent="Decider/BehaviourTree/Sel_Activities" index="0"]
-
-[node name="Talk" type="Node" parent="Decider/BehaviourTree/Sel_Activities" index="1"]
-
-[node name="Seq_DeliverItem" type="Node" parent="Decider/BehaviourTree/Sel_Activities" index="2"]
-
-[node name="ItemClose" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_DeliverItem" index="0"]
-
-[node name="PickUp" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_DeliverItem" index="1"]
-
-[node name="FindClosestDeliveryPoint" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_DeliverItem" index="2"]
-
-[node name="Deliver" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_DeliverItem" index="3"]
-
-[node name="Seq_Enemy" type="Node" parent="Decider/BehaviourTree/Sel_Activities" index="3"]
-
-[node name="EnemyWithinRadius" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_Enemy" index="0"]
-
-[node name="Pursue" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_Enemy" index="1"]
-
-[node name="Seq_Proximity" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_Enemy" index="2"]
-
-[node name="InMeleeRange" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_Enemy/Seq_Proximity" index="0"]
-
-[node name="Attack" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_Enemy/Seq_Proximity" index="1"]
-
-[node name="Item" type="Node" parent="Decider/BehaviourTree/Sel_Activities" index="4"]
-
-[node name="PickUp" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Item" index="0"]
-
-[node name="Seq_Patrol" type="Node" parent="Decider/BehaviourTree/Sel_Activities" index="5"]
-
-[node name="GetAvailablePoint" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_Patrol" index="0"]
-
-[node name="GoTo" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_Patrol" index="1"]
-
-[node name="Seq_Proximity" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_Patrol" index="2"]
-
-[node name="Close" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_Patrol/Seq_Proximity" index="0"]
-
-[node name="ChangePoint" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_Patrol/Seq_Proximity" index="1"]
-
-[node name="MarkOffPoint" type="Node" parent="Decider/BehaviourTree/Sel_Activities/Seq_Patrol/Seq_Proximity" index="2"]
-
-[node name="Idle" type="Node" parent="Decider/BehaviourTree/Sel_Activities" index="6"]
 
 [node name="Navigator" type="Node2D" parent="." index="6"]
 script = ExtResource("7_8stfh")

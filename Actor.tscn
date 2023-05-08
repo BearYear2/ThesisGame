@@ -7,7 +7,7 @@
 [ext_resource type="AnimationNodeBlendSpace2D" uid="uid://dbmuqmbvtvk3l" path="res://Animations/Movement/Idle.tres" id="5_4mee2"]
 [ext_resource type="AnimationNodeStateMachinePlayback" uid="uid://brrrrnnfs85ai" path="res://Animations/AnimationTreePlayBack.tres" id="6_odajh"]
 [ext_resource type="AnimationNodeBlendSpace2D" uid="uid://cktgxaelswqpc" path="res://Animations/Movement/Walking.tres" id="6_ot410"]
-[ext_resource type="Script" path="res://animator.gd" id="6_pugfu"]
+[ext_resource type="Script" path="res://Scripts/animator.gd" id="8_r0jsn"]
 [ext_resource type="AudioStream" uid="uid://bmj4yrn1woihr" path="res://Assets/sounds/walk/walk 3 slow.wav" id="9_kn2qo"]
 [ext_resource type="AudioStream" uid="uid://bod23ad6vvus0" path="res://Assets/sounds/attack/hit 3 strong attack.wav" id="10_hhmsa"]
 [ext_resource type="AudioStream" uid="uid://cbxyn074ecwo5" path="res://Assets/sounds/question.wav" id="11_5ipy8"]
@@ -140,6 +140,7 @@ position = Vector2(0, -7)
 texture = ExtResource("2_mh15l")
 hframes = 24
 vframes = 8
+frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -156,7 +157,7 @@ parameters/Hit/blend_position = Vector2(0, 0)
 parameters/Idle/blend_position = Vector2(0, 0)
 parameters/Melee/blend_position = Vector2(0, 0)
 parameters/Walk/blend_position = Vector2(0, 0)
-script = ExtResource("6_pugfu")
+script = ExtResource("8_r0jsn")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
 position = Vector2(0, -7)

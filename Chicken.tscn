@@ -1,6 +1,6 @@
 [gd_scene load_steps=30 format=3 uid="uid://dabixbtvararm"]
 
-[ext_resource type="Script" path="res://chickenAi.gd" id="1_c61tt"]
+[ext_resource type="Script" path="res://Scripts/chickenAi.gd" id="1_e4oyo"]
 [ext_resource type="Texture2D" uid="uid://bkcx84vmnvaom" path="res://Assets/Chickens/Chicken_Sprite_Sheet_Dark_Brown.png" id="1_scdtw"]
 
 [sub_resource type="Animation" id="Animation_634xa"]
@@ -196,7 +196,7 @@ radius = 17.6777
 [node name="Chicekn" type="CharacterBody2D"]
 position = Vector2(610, 355)
 scale = Vector2(0.4, 0.4)
-script = ExtResource("1_c61tt")
+script = ExtResource("1_e4oyo")
 
 [node name="Model" type="Sprite2D" parent="."]
 texture = ExtResource("1_scdtw")

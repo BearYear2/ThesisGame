@@ -160,7 +160,7 @@ func Hunt(actor,blackboard):
 				currentState = States.Patrol
 
 func Attk(actor,blackboard):
-	if blackboard["target"].player:
+	if InGroup(actor,"targetable") and blackboard["target"].player:
 		#Attack
 		Attack(actor,blackboard["target"])
 	else:
@@ -278,7 +278,7 @@ func UponLosingSight(body:Node2D):
 
 
 func UponTouchingSomething(body):
-	if InGroup(body,"targetable"):
+	if InGroup(body,"targetable") and not body.player:
 		print("we meet again")
 		if PatrolPoints:
 			var pointCount = PatrolPoints.size()

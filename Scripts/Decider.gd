@@ -235,7 +235,9 @@ func finite(actor,blackboard):
 
 func think(actor,blackboard):
 	#both point to the same reference
+	blackboard["actor"]=actor
 	worldState = blackboard
+	
 	match ThinkingMode:
 		AiMode.Simple:
 			simple(actor,blackboard)
@@ -280,10 +282,26 @@ func UponLosingSight(body:Node2D):
 func UponTouchingSomething(body):
 	if InGroup(body,"targetable") and not body.player:
 		print("we meet again")
+		await get_tree().create_timer(randf_range(0,5)).timeout
 		if PatrolPoints:
 			var pointCount = PatrolPoints.size()
 			var patrolPoint = PatrolPoints[randi()%pointCount]
+			var pointPosition = 0
+			if body.position.x < worldState["actor"].position.x:
+				pointPosition = worldState["actor"].position + Vector2(300,0)
+			else:
+				pointPosition = worldState["actor"].position - Vector2(300,0)
+			if body.position.y < worldState["actor"].position.y:
+				pointPosition = worldState["actor"].position - Vector2(0,300)
+			else:
+				pointPosition = worldState["actor"].position + Vector2(0,300)
+			print(worldState["actor"].name)
+			print(pointPosition,worldState["actor"].position)
+			for patPo in PatrolPoints:
+					if patPo.position.distance_to(pointPosition) < patrolPoint.position.distance_to(pointPosition):
+						patrolPoint = patPo
 			worldState["target"]= patrolPoint
+			runningAway = true
 
 
 func UponNoLongerTouching(body):

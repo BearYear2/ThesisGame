@@ -5,7 +5,7 @@ extends CharacterBody2D
 @export var moveDir : Vector2 = Vector2(0,0.1)
 @export var faceDir = "res://Assets/Puny-Characters/"
 @onready var itemPos = $ItemPosition
-
+@onready var healthbar = $HealthBar
 #player specific, currently never resolves to find RemoteTransfrom2D for BadActors
 @onready var remTran = $RemoteTransform2D
 
@@ -48,6 +48,8 @@ func death():
 	$HitArea.monitorable = false
 	$HitArea.monitoring = false
 	dead = true
+	if player:
+		get_tree().reload_current_scene()
 func randomModel():
 	var dir = DirAccess.open(faceDir)
 	if dir:
@@ -85,7 +87,7 @@ func itemPickUp():
 		hasItem = true
 
 func itemUnPick():
-	if hasItem:
+	if hasItem and item:
 		print("bye")
 		item.position += Vector2(randf_range(0,1.0),randf_range(0,1.0))
 		item.reparent(get_parent())
@@ -132,6 +134,8 @@ func _physics_process(delta):
 		death()
 	if not dead:
 		if player:
+			if Input.is_action_pressed("EscKey"):
+				get_tree().quit()
 			player_process(delta)
 		else:
 			ai_process(delta)
@@ -153,6 +157,7 @@ func UponHurt(area):
 	if area not in get_children() and area.name == "HitArea":
 		health -= randf_range(10.0,20.0)
 		print(health)
+		healthbar.value = health
 		attacked = true
 		if canBeAfraid:
 			afraid = true

@@ -12,14 +12,19 @@ func get_target_position() -> Vector2:
 	return targetPosition
 
 func set_target_position(pos: Vector2):
-	targetPosition = Vector2(Vector2i(pos))
+	
 	if actor:
-		actorVec2i = Vector2i(actor.position)
-		var _start = tilemap.local_to_map(actorVec2i)
-		var _end = tilemap.local_to_map(targetPosition)
-		#print("start,end",_start,_end)
-		path = tilemap.grid.get_id_path (_start,_end)
-		#print("path",path)
+		#check if we can walk to that position
+		var tilePos = tilemap.local_to_map(Vector2i(pos))
+		var cellData = tilemap.get_cell_tile_data(0,tilePos)
+		if cellData and cellData.get_navigation_polygon(0):
+			targetPosition = Vector2(Vector2i(pos))
+			actorVec2i = Vector2i(actor.position)
+			var _start = tilemap.local_to_map(actorVec2i)
+			var _end = tilemap.local_to_map(targetPosition)
+			#print("start,end",_start,_end)
+			path = tilemap.grid.get_id_path (_start,_end)
+			#print("path",path)
 
 @onready var previousPoint = Vector2((actor.position))
 func get_next_path_position() -> Vector2:

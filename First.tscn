@@ -255,6 +255,36 @@ position = Vector2(1243, 351)
 [node name="Bad2" parent="." instance=ExtResource("4_0jhi1")]
 position = Vector2(1239, 406)
 
+[node name="Bad6" parent="." instance=ExtResource("4_0jhi1")]
+position = Vector2(1332, 484)
+
+[node name="Bad7" parent="." instance=ExtResource("4_0jhi1")]
+position = Vector2(1451, 497)
+
+[node name="Bad8" parent="." instance=ExtResource("4_0jhi1")]
+position = Vector2(2034, 437)
+
+[node name="Bad9" parent="." instance=ExtResource("4_0jhi1")]
+position = Vector2(1623, 621)
+
+[node name="Bad10" parent="." instance=ExtResource("4_0jhi1")]
+position = Vector2(1175, 1052)
+
+[node name="Bad11" parent="." instance=ExtResource("4_0jhi1")]
+position = Vector2(973, 1152)
+
+[node name="Bad12" parent="." instance=ExtResource("4_0jhi1")]
+position = Vector2(490, 1109)
+
+[node name="Bad13" parent="." instance=ExtResource("4_0jhi1")]
+position = Vector2(405, 727)
+
+[node name="Bad14" parent="." instance=ExtResource("4_0jhi1")]
+position = Vector2(230, 173)
+
+[node name="Bad15" parent="." instance=ExtResource("4_0jhi1")]
+position = Vector2(571, 200)
+
 [node name="Chicekn" parent="." instance=ExtResource("7_h60fy")]
 
 [node name="Chicekn2" parent="." instance=ExtResource("7_h60fy")]

@@ -58,7 +58,7 @@ func debug_cell(coords:Vector2i):
 	
 func _ready():
 	var rect = get_used_rect().end
-	#debug(rect)
+	#debug(get_used_rect())
 	grid.cell_size = Vector2i(get_quadrant_size(),get_quadrant_size())
 	grid.size = rect
 	grid.offset = grid.cell_size*0.5

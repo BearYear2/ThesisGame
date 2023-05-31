@@ -119,6 +119,8 @@ func player_process(_delta):
 
 
 func ai_process(delta):
+	#this doesn't necessarily need to happen every frame
+	#but it's better than not updating them at all
 	blackboard["speed"] = speed
 	blackboard["delta"] = delta
 	blackboard["attacked"] = attacked
@@ -129,61 +131,93 @@ func ai_process(delta):
 	decider.think(self,blackboard)
 	
 
+#The main brains of the entire agent.
+#This function deals with both the player and the NPC's movement and actions
 func _physics_process(delta):
+	# we died, oh no!
 	if health <=0:
 		death()
+	# we are still alive!
 	if not dead:
+		# are we the player?
 		if player:
 			if Input.is_action_pressed("EscKey"):
 				get_tree().quit()
 			player_process(delta)
+		# or the NPC?
 		else:
 			ai_process(delta)
+		
 		if attacked:
 			animationTree.playAnimation("Hit",moveDir)
+		
+		#If we are moving, play the "Walk" animation in the current direction
 		if moveDir != Vector2.ZERO:
 			animationTree.playAnimation("Walk",moveDir)
+			# play the footstep sound if it's not already playing
 			if not footsteps.playing:
 				footsteps.play()
+			#update the lastDir, this is used for Idle
 			lastDir = moveDir
 		else:
+			#we use lastDir in order to keep the previous orientation
+			#otherwise we would default to looking down, I think?
 			animationTree.playAnimation("Idle",lastDir)
-				
+		
+		# 'velocity' is a variable inherited from the CharacterBody2D
+		# it's used when calling 'move_and_slide()'
 		velocity = moveDir * speed
 		if velocity != Vector2.ZERO:
+			#this wonderful function deals with movement
+			#and allows sliding against solid objects (based on the Node settings)
 			move_and_slide()
 
+
+
+
+
+
+#General Sensors area
+#These are valid for both player and enemy, so we need them in the Actor script
+
+#When tacking damage, decrease health by a random value between 10 and 20
+#Update the healthbar
+#Make sure to know that we are attacked
 func UponHurt(area):
 	if area not in get_children() and area.name == "HitArea":
 		health -= randf_range(10.0,20.0)
 		print(health)
 		healthbar.value = health
 		attacked = true
-		if canBeAfraid:
-			afraid = true
+		#This was intended as an additional mechanic
+		#if canBeAfraid:
+		#	afraid = true
 
-
+#Phew, no more attacks
 func UponSafe(area):
 	if area not in get_children() and area.name == "HitArea":
 		attacked = false
-		if canBeAfraid:
-			afraid = false
+		#This was intended as an additional mechanic
+		#if canBeAfraid:
+		#	afraid = false
 
-
+#This is a simple item proximity detector, though it might malfunction at times
 func ItemClose(area):
 	if area not in get_children() and area.name.begins_with("Item"):
 		#print("We are rich ",area.name)
 		#players can pick all items, npc's can only pick specific items
 		if area.name == goal or player:
 			itemClose = true
+			#This is important, make sure we know who the item is
 			item = area.get_parent()
+			#and to whom it belongs
 			itemOldParent = item.get_parent()
 
-
+#The opposite of the above function, we "forget" about the item. Opsie!
 func ItemFar(area):
 	if area not in get_children() and area.name.begins_with("Item"):
 		#print("We are poor ",area.name)
-		if area.name == goal:
+		if area.name == goal or player:
 			itemClose = false
 			item = null
 			itemOldParent = null

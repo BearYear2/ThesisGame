@@ -20,6 +20,9 @@ radius = 80.0
 speed = 50.0
 player = false
 
+[node name="Model" parent="." index="2"]
+frame = 1
+
 [node name="Sensor" type="Node2D" parent="." index="4"]
 
 [node name="Sight" type="Area2D" parent="Sensor" index="0"]
@@ -54,6 +57,9 @@ script = ExtResource("8_xxt7b")
 
 [node name="AnimationTree" parent="." index="9"]
 parameters/playback = SubResource("AnimationNodeStateMachinePlayback_4cyse")
+
+[node name="HitArea" parent="." index="11"]
+position = Vector2(0, -7)
 
 [connection signal="body_entered" from="Sensor/Sight" to="Decider" method="UponSeeingSomething"]
 [connection signal="body_exited" from="Sensor/Sight" to="Decider" method="UponLosingSight"]

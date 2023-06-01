@@ -1,27 +1,18 @@
-#A* does not currently work
-#Characters go towards their oblivion into
-
 extends TileMap
 
 @export var AStarLayer = 0
 @export var NavLayer = 0
 #docs article on the heuristic
 #https://docs.godotengine.org/en/stable/classes/class_astargrid2d.html#enum-astargrid2d-heuristic
-#although it's an enum, it still provides enough for most game devs
+#although it's a short enum, it still provides enough for most game devs
 @export var costHeuristic: AStarGrid2D.Heuristic = AStarGrid2D.HEURISTIC_EUCLIDEAN
 @export var estimateHeuristic: AStarGrid2D.Heuristic = AStarGrid2D.HEURISTIC_EUCLIDEAN
 
-#this is not good
-#it works perfectly fine for a single character, but what do we do when we have multiple characters?
-var actor : Node = null
-var actorVec2i : Vector2i = Vector2i.ZERO
-var targetPosition : Vector2 = Vector2i.ZERO
-var path = null
-
-# Called when the node enters the scene tree for the first time.
 # quite an important variable we got here
 var grid : AStarGrid2D = AStarGrid2D.new()
 
+
+#this function displays the current rectange that represens the entire world
 func debug(rect):
 	var poly:Polygon2D = get_node("../Debug")
 	var polies = poly.get_polygon()
@@ -30,7 +21,9 @@ func debug(rect):
 	polies.append(rect.end*16)
 	polies.append(Vector2(rect.end.x, rect.position.y)*16)
 	poly.set_polygon(polies)
-	
+
+#call this function when defining the grid
+#it creates a white 2D polygon at the specified position
 func draw_poly(cell:Vector2):
 	var poly: Polygon2D = Polygon2D.new()
 	var polies = poly.get_polygon()
@@ -45,6 +38,8 @@ func draw_poly(cell:Vector2):
 	print(poly.position)
 	add_child(poly)
 	poly.z_index = 3
+	
+#function used to draw a dark tile for debug purposes
 func debug_cell(coords:Vector2i):
 	var cellToDraw = coords
 	#this corresponds to a darker tile, which helps with boundary visiblity
@@ -74,9 +69,6 @@ func _ready():
 			if not cellData.get_navigation_polygon(0):
 				#print(pos*8.5)
 				grid.set_point_solid(pos)
+				#keep in mind that it's not very efficient 
+				#as we just colour all solid cells
 				#draw_poly(map_to_local(pos))
-
-	#enable for faster algo, also, it disregards edge cost
-	#it works a bit too well, it cuts corners and the actors passes through solids
-	#grid.jumping_enabled = true
-	

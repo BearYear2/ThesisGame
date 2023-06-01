@@ -46,7 +46,6 @@ var goal:String = itemGoal[randi()%itemGoal.size()]
 var dead = false
 #last move direction, we need this when switching between animations
 var lastDir = Vector2.ZERO
-var attacked = false
 var health:float = 100.0
 
 #item related variables
@@ -102,7 +101,7 @@ func _ready():
 	#blackboard["target"] = groupMembers[0]
 
 func itemPickUp():
-	if itemClose:
+	if itemClose and !hasItem and item:
 		#we now make this item a child
 		item.reparent(self)
 		#and assign it's position to a predefined spot
@@ -159,7 +158,7 @@ func ai_process(delta):
 	#but it's better than not updating them at all
 	blackboard["speed"] = speed
 	blackboard["delta"] = delta
-	blackboard["attacked"] = attacked
+	#blackboard["attacked"] = attacked
 	blackboard["itemClose"] = itemClose
 	blackboard["hasItem"] = hasItem
 	#The magic itself, we offload the entire thinking process to the 'Decider' node
@@ -183,8 +182,6 @@ func _physics_process(delta):
 		else:
 			ai_process(delta)
 		
-		if attacked:
-			animationTree.playAnimation("Hit",moveDir)
 		
 		#If we are moving, play the "Walk" animation in the current direction
 		if moveDir != Vector2.ZERO:
@@ -218,15 +215,16 @@ func _physics_process(delta):
 #Make sure to know that we are attacked
 func UponHurt(area):
 	if area not in get_children() and area.name == "HitArea":
-		health -= randf_range(10.0,20.0)
+		health -= randf_range(5.0,10.0)
+		animationTree.playAnimation("Hit",moveDir)
 		print(health)
 		healthbar.value = health
-		attacked = true
 
 #Phew, no more attacks
 func UponSafe(area):
-	if area not in get_children() and area.name == "HitArea":
-		attacked = false
+	#if area not in get_children() and area.name == "HitArea":
+	#	attacked = false
+	pass
 
 #This is a simple item proximity detector, though it might malfunction at times
 func ItemClose(area):

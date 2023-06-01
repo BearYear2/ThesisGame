@@ -31,9 +31,11 @@ var worldState: Dictionary = Dictionary()
 #i could just decide when to use them based on what technique i am currently using
 #though i am a bit disheartened that there won't be enough of a difference
 #since i am running the most optimized example
+
+
 func InGroup(node:Node2D,groupName:String):
 	var result = false
-	if node in get_tree().get_nodes_in_group(groupName):
+	if get_tree() and node in get_tree().get_nodes_in_group(groupName):
 		result = true
 	return result
 	
@@ -285,30 +287,34 @@ func UponLosingSight(body:Node2D):
 func UponTouchingSomething(body):
 	if InGroup(body,"targetable") and not body.player:
 		print("we meet again")
-		await get_tree().create_timer(randf_range(0,5)).timeout
-		if PatrolPoints:
+		#await get_tree().create_timer(randf_range(0,5)).timeout
+		if PatrolPoints and worldState.has("actor"):
 			var pointCount = PatrolPoints.size()
 			var patrolPoint = PatrolPoints[randi()%pointCount]
-			var pointPosition = 0
+			var pointPosition = patrolPoint.position
+			
+			worldState["actor"].position += Vector2(randf_range(-2,2), randf_range(-2,2))
 			if body.position.x < worldState["actor"].position.x:
-				pointPosition = worldState["actor"].position + Vector2(300,0)
+				worldState["actor"].position += Vector2(randf_range(0,5), randf_range(0,5))
+				#pointPosition = worldState["actor"].position + Vector2(300,0)
 			else:
-				pointPosition = worldState["actor"].position - Vector2(300,0)
-			if body.position.y < worldState["actor"].position.y:
-				pointPosition = worldState["actor"].position - Vector2(0,300)
-			else:
-				pointPosition = worldState["actor"].position + Vector2(0,300)
+				worldState["actor"].position += Vector2(randf_range(-5,0), randf_range(-5,0))
+				#pointPosition = worldState["actor"].position - Vector2(300,0)
+			#if body.position.y < worldState["actor"].position.y:
+				#pointPosition = worldState["actor"].position - Vector2(0,300)
+			#else:
+				#pointPosition = worldState["actor"].position + Vector2(0,300)
 			print(worldState["actor"].name)
 			print(pointPosition,worldState["actor"].position)
-			for patPo in PatrolPoints:
-					if patPo.position.distance_to(pointPosition) < patrolPoint.position.distance_to(pointPosition):
-						patrolPoint = patPo
-			worldState["target"]= patrolPoint
+			#for patPo in PatrolPoints:
+					#if patPo.position.distance_to(pointPosition) < patrolPoint.position.distance_to(pointPosition):
+						#patrolPoint = patPo
+			worldState["target"] = patrolPoint
 			runningAway = true
 
 
 func UponNoLongerTouching(body):
-	if not body.player:
+	if InGroup(body,"targetable") and not body.player:
 		runningAway = false
 	else:
 		if  not runningAway: #or RequiresMyItem(body)

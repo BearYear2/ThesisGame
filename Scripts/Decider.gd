@@ -3,13 +3,13 @@
 #AiMode is the cognitive part, the active thinking making use of all resources
 
 
-#this class would benefit some refactoring
 
 extends Node2D
+
 #navigation related variables
 @onready var navigator = get_node("../Navigator")
 @onready var navAgent = get_node("../NavAgent2D")
-@onready var astarAgent :Node = get_node("../AStarAgent2D")
+@onready var astarAgent = get_node("../AStarAgent2D")
 @export var navigationSpeed = 50
 enum NavMode {NavAgent,AStar}
 @export var NavigationMode:NavMode = NavMode.NavAgent
@@ -17,11 +17,14 @@ enum NavMode {NavAgent,AStar}
 
 enum AiMode {Simple,FSM}
 @export var ThinkingMode: AiMode = AiMode.Simple
-#var hostile = false
 
+#we need to know where we can go
 @onready var PatrolPoints = get_tree().get_nodes_in_group("points")
 @onready var DeliveryPoints = get_tree().get_nodes_in_group("delivery")
 
+#the blackboard from Actor.gd is saved into this variable
+#since we only have temporary access to it during specific calls
+#and Decider has additional sensors that depend on the actor and it's state
 var worldState: Dictionary = Dictionary()
 
 #what if i put these functions into some sort of action list?

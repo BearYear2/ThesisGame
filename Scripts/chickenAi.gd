@@ -1,8 +1,12 @@
 extends CharacterBody2D
 
+#the location of the chicken spritesheets
 @export var faceDir = "res://Assets/Chickens/"
 @onready var animationTree = $AnimationTree
+#a reference to the animation state machine, look in Actor.gd as well
 @onready var animState:AnimationNodeStateMachinePlayback = animationTree.get("parameters/playback")
+
+#same implementation as in Actor.gd
 func randomModel():
 	var dir = DirAccess.open(faceDir)
 	if dir:
@@ -17,16 +21,18 @@ func randomModel():
 
 func _ready():
 	randomModel()
-	#OS.delay_msec(randf_range(100,1000))
-	#artificial delay to give a bit of randomness
+	#artificial delay when the chickens will sit to give a bit of randomness
 	await get_tree().create_timer(randf_range(0.1,10)).timeout
 	animState.travel("IdleSit")
-const Bounds_TopLeft = Vector2(-10,-10)
-const Bounds_BotRight = Vector2(10,10)
-var moveDir = Vector2.ZERO
-var point = Vector2.ZERO
-var speed = 10
-func _process(delta):
+
+#Chickens were actually meant to move at some point. Now they are just decorations
+
+#const Bounds_TopLeft = Vector2(-10,-10)
+#const Bounds_BotRight = Vector2(10,10)
+#var moveDir = Vector2.ZERO
+#var point = Vector2.ZERO
+#var speed = 10
+#func _process(delta):
 	#if randi() % 100 >= 70:
 	#	animState.travel("Rise")
 	#	var pointX = randf_range(Bounds_TopLeft.x,Bounds_BotRight.x)
@@ -38,4 +44,4 @@ func _process(delta):
 	#else:
 	#	velocity = Vector2.ZERO
 	#move_and_slide()
-	pass
+#	pass

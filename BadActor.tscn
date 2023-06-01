@@ -20,9 +20,6 @@ radius = 80.0
 speed = 50.0
 player = false
 
-[node name="Model" parent="." index="2"]
-frame = 1
-
 [node name="Sensor" type="Node2D" parent="." index="4"]
 
 [node name="Sight" type="Area2D" parent="Sensor" index="0"]

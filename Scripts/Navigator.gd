@@ -1,16 +1,22 @@
 extends Node2D
+
+#get a reference to the navigation agent and a* agent
 @onready var navAgent = get_node("../NavAgent2D")
+@onready var AStarAgent :Node = get_node("../AStarAgent2D")
 @export var searchRadius = 2
 enum Mode {NavAgent,AStar}
-#A* specific variables
-@onready var AStarAgent :Node = get_node("../AStarAgent2D")
+
 #no character can have negative location, at least those that move on the grid
+#this is very important, there were a lot of issues with A*
+#and the tilemap containing tiles on negative positions
+
 
 func GetDistance(a:Node2D, b:Node2D) -> float:
 	var aGlobal = GetGlobalPosition(a)
 	var bGlobal = GetGlobalPosition(b)
 	return aGlobal.distance_to(bGlobal)
 
+#shortcut function to get the proper global_position
 func GetGlobalPosition(a:Node2D) -> Vector2:
 	var temp : Vector2 = Vector2.ZERO
 	if a.is_inside_tree():
@@ -19,15 +25,18 @@ func GetGlobalPosition(a:Node2D) -> Vector2:
 		temp = a.position
 	return temp
 
+#Call this function to deal with calculating and advancing through the map
 func Navigate(actor:CharacterBody2D,speed:float,mode=Mode.NavAgent) ->int:
 	var result = -1
-	var currentLocation = GetGlobalPosition(actor)
-	var nextLocation = currentLocation
+	
+	#simple shorthand to use the appropiate node when computing navigation
 	var Agent = navAgent if mode == Mode.NavAgent else AStarAgent
 	#code adapted from here
 	#https://www.youtube.com/watch?v=-juhGgA076E
-	#use else for now, since we only have two modes
-	nextLocation = Agent.get_next_path_position()
+	var currentLocation = GetGlobalPosition(actor)
+	#this is why we need to have identical calls to the navigation agent
+	#otherwise we would need a switch (match) structure in order to call functions
+	var nextLocation = Agent.get_next_path_position()
 	var newVelo = currentLocation.direction_to(nextLocation)
 	#this is crucial, we need to set our actors moveDir
 	actor.moveDir = newVelo

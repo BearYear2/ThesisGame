@@ -44,7 +44,7 @@ shape = SubResource("CircleShape2D_87d76")
 
 [node name="Decider" type="Node2D" parent="." index="5"]
 script = ExtResource("3_7c25g")
-NavigationMode = 1
+ThinkingMode = 1
 
 [node name="Navigator" type="Node2D" parent="." index="6"]
 script = ExtResource("7_8stfh")
@@ -54,6 +54,10 @@ searchRadius = 25
 script = ExtResource("8_xxt7b")
 
 [node name="NavAgent2D" type="NavigationAgent2D" parent="." index="8"]
+path_desired_distance = 1.0
+target_desired_distance = 1.0
+path_postprocessing = 1
+debug_enabled = true
 
 [node name="AnimationTree" parent="." index="9"]
 parameters/playback = SubResource("AnimationNodeStateMachinePlayback_4cyse")

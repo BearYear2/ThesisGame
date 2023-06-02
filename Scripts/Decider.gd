@@ -300,16 +300,21 @@ func UponTouchingSomething(body):
 			else:
 				worldState["actor"].position += Vector2(randf_range(-5,0), randf_range(-5,0))
 				#pointPosition = worldState["actor"].position - Vector2(300,0)
+				
+			
 			#if body.position.y < worldState["actor"].position.y:
 				#pointPosition = worldState["actor"].position - Vector2(0,300)
+			#	worldState["actor"].moveDir += Vector2(randf_range(0,5), randf_range(0,5))
 			#else:
+			#	worldState["actor"].moveDir += Vector2(randf_range(-5,0), randf_range(-5,0))
 				#pointPosition = worldState["actor"].position + Vector2(0,300)
+				
 			print(worldState["actor"].name)
 			print(pointPosition,worldState["actor"].position)
 			#for patPo in PatrolPoints:
 					#if patPo.position.distance_to(pointPosition) < patrolPoint.position.distance_to(pointPosition):
 						#patrolPoint = patPo
-			worldState["target"] = patrolPoint
+			#worldState["target"] = patrolPoint
 			runningAway = true
 
 

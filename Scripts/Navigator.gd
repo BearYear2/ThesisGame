@@ -37,9 +37,9 @@ func Navigate(actor:CharacterBody2D,speed:float,mode=Mode.NavAgent) ->int:
 	#this is why we need to have identical calls to the navigation agent
 	#otherwise we would need a switch (match) structure in order to call functions
 	var nextLocation = Agent.get_next_path_position()
-	var newVelo = currentLocation.direction_to(nextLocation)
+	var newDir = currentLocation.direction_to(nextLocation)
 	#this is crucial, we need to set our actors moveDir
-	actor.moveDir = newVelo
+	actor.moveDir = newDir
 	#euclidean distance to the target
 	var distance = currentLocation.distance_to(Agent.get_target_position())
 	#var distance = currentLocation.distance_to(nextLocation)

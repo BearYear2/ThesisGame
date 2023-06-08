@@ -18,13 +18,24 @@ func randomModel():
 					$Model.texture = load(faceDir+file)
 					break
 			file = dir.get_next()
+			
 
+var nextPoint = Vector2.ZERO
 func _ready():
 	randomModel()
 	#artificial delay when the chickens will sit to give a bit of randomness
 	await get_tree().create_timer(randf_range(0.1,10)).timeout
 	animState.travel("IdleSit")
+	$Move.wait_time = randf_range(0.5,3)
+	nextPoint = position
+	$CollisionBox.disabled = true
+	$ItemChicken.monitorable = false
+	$ItemChicken.monitoring = false
+	$ItemChicken/CollisionShape2D.disabled = false
 
+func _process(delta):
+	if nextPoint != position:
+		pass
 #Chickens were actually meant to move at some point. Now they are just decorations
 
 #const Bounds_TopLeft = Vector2(-10,-10)
@@ -45,3 +56,10 @@ func _ready():
 	#	velocity = Vector2.ZERO
 	#move_and_slide()
 #	pass
+
+
+func OnTimerFinish():
+	#chickens should move randomly
+	var x = randf_range(-10,10)
+	var y = randf_range(-10,10)
+	nextPoint = Vector2(x,y)

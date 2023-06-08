@@ -222,3 +222,8 @@ shape = SubResource("RectangleShape2D_oc5j4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ItemChicken"]
 shape = SubResource("CircleShape2D_5o2ko")
+
+[node name="Move" type="Timer" parent="."]
+process_callback = 0
+
+[connection signal="timeout" from="Move" to="." method="OnTimerFinish"]

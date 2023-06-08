@@ -183,7 +183,7 @@ states/Sit/position = Vector2(300, 184)
 states/Walk/node = SubResource("AnimationNodeAnimation_0x527")
 states/Walk/position = Vector2(536, 53)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_1hnqp"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_kkode"), "Walk", "Run", SubResource("AnimationNodeStateMachineTransition_2x5g7"), "Idle", "Sit", SubResource("AnimationNodeStateMachineTransition_4an12"), "Rise", "Idle", SubResource("AnimationNodeStateMachineTransition_qkbu5"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_yl4wm"), "Run", "Walk", SubResource("AnimationNodeStateMachineTransition_w06wo"), "Sit", "IdleSit", SubResource("AnimationNodeStateMachineTransition_awwis"), "IdleSit", "Rise", SubResource("AnimationNodeStateMachineTransition_c7n4n")]
-graph_offset = Vector2(-49, 120)
+graph_offset = Vector2(-90, 43)
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_j68q4"]
 
@@ -217,13 +217,18 @@ parameters/playback = SubResource("AnimationNodeStateMachinePlayback_j68q4")
 [node name="CollisionBox" type="CollisionShape2D" parent="."]
 position = Vector2(-0.00012207, 2.49994)
 shape = SubResource("RectangleShape2D_oc5j4")
+disabled = true
 
 [node name="ItemChicken" type="Area2D" parent="."]
+monitoring = false
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ItemChicken"]
 shape = SubResource("CircleShape2D_5o2ko")
+disabled = true
 
 [node name="Move" type="Timer" parent="."]
 process_callback = 0
+autostart = true
 
 [connection signal="timeout" from="Move" to="." method="OnTimerFinish"]

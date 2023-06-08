@@ -31,12 +31,33 @@ func _ready():
 	$CollisionBox.disabled = true
 	$ItemChicken.monitorable = false
 	$ItemChicken.monitoring = false
-	$ItemChicken/CollisionShape2D.disabled = false
+	$ItemChicken/CollisionShape2D.disabled = true
 
+var moveDir = Vector2.ZERO
+var lastDir = Vector2.ZERO
+var speed = 50
 func _process(delta):
-	if nextPoint != position:
-		pass
-#Chickens were actually meant to move at some point. Now they are just decorations
+	moveDir = position.direction_to(nextPoint)
+	#If we are moving, play the "Walk" animation in the current direction
+	if moveDir >= Vector2.ONE/3:
+		animState.travel("Walk")
+		#animationTree.playAnimation("Walk",moveDir)
+		#update the lastDir, this is used for Idle
+		lastDir = moveDir
+	else:
+		#we use lastDir in order to keep the previous orientation
+		#otherwise we would default to looking down, I think?
+		animState.travel("IdleSit")
+		moveDir=Vector2.ZERO
+		#animationTree.playAnimation("Idle",lastDir)
+	
+	# 'velocity' is a variable inherited from the CharacterBody2D
+	# it's used when calling 'move_and_slide()'
+	velocity = moveDir * speed
+	if velocity != Vector2.ZERO:
+		#this wonderful function deals with movement
+		#and allows sliding against solid objects (based on the Node settings)
+		move_and_slide()
 
 #const Bounds_TopLeft = Vector2(-10,-10)
 #const Bounds_BotRight = Vector2(10,10)
@@ -62,4 +83,5 @@ func OnTimerFinish():
 	#chickens should move randomly
 	var x = randf_range(-10,10)
 	var y = randf_range(-10,10)
-	nextPoint = Vector2(x,y)
+	nextPoint = Vector2i(x,y) + Vector2i(position)
+	$Move.wait_time = randf_range(5,10)

@@ -286,7 +286,7 @@ func UponLosingSight(body:Node2D):
 
 func UponTouchingSomething(body):
 	if InGroup(body,"targetable") and not body.player:
-		print("we meet again")
+		#print("we meet again")
 		#await get_tree().create_timer(randf_range(0,5)).timeout
 		if PatrolPoints and worldState.has("actor"):
 			var pointCount = PatrolPoints.size()
@@ -309,8 +309,8 @@ func UponTouchingSomething(body):
 			#	worldState["actor"].moveDir += Vector2(randf_range(-5,0), randf_range(-5,0))
 				#pointPosition = worldState["actor"].position + Vector2(0,300)
 				
-			print(worldState["actor"].name)
-			print(pointPosition,worldState["actor"].position)
+			#print(worldState["actor"].name)
+			#print(pointPosition,worldState["actor"].position)
 			#for patPo in PatrolPoints:
 					#if patPo.position.distance_to(pointPosition) < patrolPoint.position.distance_to(pointPosition):
 						#patrolPoint = patPo

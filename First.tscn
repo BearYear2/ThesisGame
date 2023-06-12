@@ -47,7 +47,7 @@ text = "A*"
 layout_mode = 2
 text = "Godot"
 
-[node name="CheckButton" type="CheckButton" parent="camera/Back/PathFinding/Godot"]
+[node name="Debug" type="CheckButton" parent="camera/Back/PathFinding/Godot"]
 layout_mode = 0
 offset_left = 94.0
 offset_top = 1.0
@@ -386,3 +386,8 @@ position = Vector2(1957, 485)
 
 [node name="Chicekn16" parent="." instance=ExtResource("7_h60fy")]
 position = Vector2(1437, 419)
+
+[connection signal="toggled" from="camera/Back/PathFinding/A*" to="camera" method="AStarNavToggled"]
+[connection signal="toggled" from="camera/Back/PathFinding/Godot" to="camera" method="GodotNavToggled"]
+[connection signal="toggled" from="camera/Back2/Decision/DT" to="camera" method="DTToggled"]
+[connection signal="toggled" from="camera/Back2/Decision/FSM" to="camera" method="FSMToggled"]

@@ -35,7 +35,7 @@ var worldState: Dictionary = Dictionary()
 
 func InGroup(node:Node2D,groupName:String):
 	var result = false
-	if get_tree() and node in get_tree().get_nodes_in_group(groupName):
+	if get_owner() and get_tree() and node in get_tree().get_nodes_in_group(groupName):
 		result = true
 	return result
 	
@@ -278,7 +278,7 @@ func UponHearingSomething(body : Node2D):
 
 func UponLosingSight(body:Node2D):
 	#sometimes, in debug, an error would be fired when stopping
-	if get_tree():
+	if get_owner() and get_tree():
 		if body in get_tree().get_nodes_in_group("targetable"):
 			if body.player and not worldState.get("hasItem"):# and not hostile:
 				worldState["target"] = null

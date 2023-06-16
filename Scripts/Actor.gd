@@ -88,10 +88,11 @@ func _ready():
 	#take a reference to these functions
 	#although we can access them by calling from our object (aka, actor)
 	#i really wanted to test these new Callable objects introduced in Godot 4
-	blackboard["action_Pick"] = Callable(self,"itemPickUp")
-	blackboard["action_Drop"] = Callable(self,"itemUnPick")
-	blackboard["action_Death"] = Callable(self,"death")
-	blackboard["action_ChangeModel"] = Callable(self,"randomModel")
+	if not player:
+		blackboard["action_Pick"] = Callable(self,"itemPickUp")
+		blackboard["action_Drop"] = Callable(self,"itemUnPick")
+		blackboard["action_Death"] = Callable(self,"death")
+		blackboard["action_ChangeModel"] = Callable(self,"randomModel")
 	#Choose a random model for each character
 	randomModel()
 	#special treatment for the player, make the camera follow them

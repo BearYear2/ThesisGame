@@ -198,9 +198,6 @@ func simple(actor,blackboard):
 	#maybe avoid the player when you have an item
 	#if blackboard.get("hasItem") and :
 	#	pass 
-		
-		
-	
 	if blackboard.get("target"):
 		#have we arrived close enough to our target?
 		#Patorl/Hunt
@@ -208,6 +205,10 @@ func simple(actor,blackboard):
 			#is thihs target 'targetable'?
 			if blackboard.get("hasItem") and InGroup(blackboard["target"],"delivery"):
 				actor.itemUnPick()
+				#Idle
+				blackboard["target"] = actor
+				await get_tree().create_timer(randf_range(1,10)).timeout
+				blackboard["target"] = null
 			if InGroup(blackboard["target"],"targetable"):
 				#is it a player?
 				if blackboard["target"].player and not blackboard.get("hasItem"):
@@ -215,11 +216,6 @@ func simple(actor,blackboard):
 					Attack(actor,blackboard["target"])
 				if blackboard["target"].health <=0:
 					blackboard["target"] = null
-			else:
-				#Idle
-				blackboard["target"] = actor
-				await get_tree().create_timer(randf_range(1,10)).timeout
-				blackboard["target"] = null
 	else:
 		#Patrol
 		if PatrolPoints:
@@ -231,12 +227,12 @@ enum States {Idle,Patrol,Hunt,Attack,Talk,DeliverItem}
 var currentState:States = States.Idle
 func finite(actor,blackboard):
 	match currentState:
-		States.Idle:Idle(actor,blackboard)
-		States.Patrol:Pat(actor,blackboard)
-		States.Hunt:Hunt(actor,blackboard)
-		States.Attack:Attk(actor,blackboard)
-		States.Talk:pass
-		States.DeliverItem:Deliver(actor,blackboard)
+		States.Idle:		Idle(actor,blackboard)
+		States.Patrol:		Pat(actor,blackboard)
+		States.Hunt:		Hunt(actor,blackboard)
+		States.Attack:		Attk(actor,blackboard)
+		#States.Talk:pass
+		States.DeliverItem:	Deliver(actor,blackboard)
 
 func think(actor,blackboard):
 	#both point to the same reference

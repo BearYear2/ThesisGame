@@ -49,7 +49,6 @@ func get_next_path_position() -> Vector2:
 	#we might lose some precision with this, but hopefully it's not too much
 	var localActor = Vector2(tilemap.local_to_map(actor.position))
 	var next_point = tilemap.local_to_map(previousPoint)
-	#currently the actor is spasing, maybe if i make all movement snapier, this might be alleviated
 	#are there at least two nodes in our path, and are we really close to the next one?
 	if (path && path.size() >= 2) and localActor.distance_to(Vector2(next_point)) < 0.1:
 		#get rid of the first node in the path
@@ -58,7 +57,7 @@ func get_next_path_position() -> Vector2:
 		next_point = path[0]
 	#keep track of the previous point we visited
 	previousPoint = tilemap.map_to_local(next_point)
-	#use this only when there's one NPC, this allows the visualisation of the path
-	#to some extent
+	#use this only when there's one NPC,
+	#this allows the visualisation of the path to some extent
 	#debugTile.position = previousPoint
 	return previousPoint

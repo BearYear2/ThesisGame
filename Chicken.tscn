@@ -194,7 +194,6 @@ size = Vector2(20, 17.5)
 radius = 17.6777
 
 [node name="Chicekn" type="CharacterBody2D"]
-position = Vector2(610, 355)
 scale = Vector2(0.4, 0.4)
 script = ExtResource("1_e4oyo")
 

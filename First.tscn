@@ -48,6 +48,7 @@ layout_mode = 2
 text = "Godot"
 
 [node name="Debug" type="CheckButton" parent="camera/Back/PathFinding/Godot"]
+visible = false
 layout_mode = 0
 offset_left = 94.0
 offset_top = 1.0

@@ -42,14 +42,12 @@ func InGroup(node:Node2D,groupName:String):
 ##########################
 ####Finished functions####
 ##########################
+##look into the demo with astargrid2d, adapt code from there
 func PursueTarget(actor:Node2D, target:Node2D, speed:float):
 	var targetGlobal = navigator.GetGlobalPosition(target)
 	navigationSpeed = speed
-	var Agent = navAgent if NavMode.NavAgent == NavigationMode else astarAgent
 	
-	#################################
-	### look into the demo with astargrid2d, adapt code from there
-	#################################
+	var Agent = navAgent if NavMode.NavAgent == NavigationMode else astarAgent
 	if Agent.get_target_position() != targetGlobal:
 		Agent.set_target_position(targetGlobal)
 		
@@ -202,18 +200,20 @@ func simple(actor,blackboard):
 		#have we arrived close enough to our target?
 		#Patorl/Hunt
 		if PursueTarget(actor,blackboard["target"], blackboard["speed"]) == 0:
-			#is thihs target 'targetable'?
+			#is this target a delivery point?
 			if blackboard.get("hasItem") and InGroup(blackboard["target"],"delivery"):
 				actor.itemUnPick()
 				#Idle
 				blackboard["target"] = actor
 				await get_tree().create_timer(randf_range(1,10)).timeout
 				blackboard["target"] = null
-			if InGroup(blackboard["target"],"targetable"):
+			#is this something we can attack?
+			elif InGroup(blackboard["target"],"targetable"):
 				#is it a player?
 				if blackboard["target"].player and not blackboard.get("hasItem"):
 					#Attack
 					Attack(actor,blackboard["target"])
+				#target's dead
 				if blackboard["target"].health <=0:
 					blackboard["target"] = null
 	else:
@@ -231,7 +231,6 @@ func finite(actor,blackboard):
 		States.Patrol:		Pat(actor,blackboard)
 		States.Hunt:		Hunt(actor,blackboard)
 		States.Attack:		Attk(actor,blackboard)
-		#States.Talk:pass
 		States.DeliverItem:	Deliver(actor,blackboard)
 
 func think(actor,blackboard):

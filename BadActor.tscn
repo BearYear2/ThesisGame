@@ -20,28 +20,35 @@ radius = 80.0
 speed = 50.0
 player = false
 
+[node name="HurtBox" parent="HurtArea" index="0"]
+debug_color = Color(1, 1, 1, 1)
+
+[node name="Model" parent="." index="2"]
+frame = 0
+
 [node name="Sensor" type="Node2D" parent="." index="4"]
 
 [node name="Sight" type="Area2D" parent="Sensor" index="0"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sensor/Sight" index="0"]
 shape = SubResource("CircleShape2D_8udur")
-debug_color = Color(0.772549, 0.247059, 0.698039, 0.682353)
+debug_color = Color(0.803922, 0.341176, 0, 0.490196)
 
 [node name="Touch" type="Area2D" parent="Sensor" index="1"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sensor/Touch" index="0"]
 position = Vector2(0, -6.5)
 shape = SubResource("RectangleShape2D_nkhox")
+debug_color = Color(0.827451, 0, 0.952941, 0.486275)
 
 [node name="Hearing" type="Area2D" parent="Sensor" index="2"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sensor/Hearing" index="0"]
 shape = SubResource("CircleShape2D_87d76")
+debug_color = Color(0, 0.627451, 0.513726, 0.211765)
 
 [node name="Decider" type="Node2D" parent="." index="5"]
 script = ExtResource("3_7c25g")
-NavigationMode = 1
 ThinkingMode = 1
 
 [node name="Navigator" type="Node2D" parent="." index="6"]
@@ -61,6 +68,9 @@ parameters/playback = SubResource("AnimationNodeStateMachinePlayback_4cyse")
 
 [node name="HitArea" parent="." index="11"]
 position = Vector2(0, -7)
+
+[node name="PickArea" parent="." index="12"]
+visible = true
 
 [connection signal="body_entered" from="Sensor/Sight" to="Decider" method="UponSeeingSomething"]
 [connection signal="body_exited" from="Sensor/Sight" to="Decider" method="UponLosingSight"]

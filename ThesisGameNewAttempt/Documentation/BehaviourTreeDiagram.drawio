@@ -1,0 +1,31 @@
+<mxfile host="app.diagrams.net" modified="2023-06-26T16:11:28.021Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/114.0" etag="9W92E3rHJfDU5xFkrVo3" version="21.4.0" type="github">
+  <diagram name="Page-1" id="jaeeHZ_dXD9QhLNrf_iC">
+    <mxGraphModel dx="500" dy="256" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="iSy0yKXPoq1yfuDHaZNE-6" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;endWidth=27.19626168224299;endSize=5.992248062015504;width=10.155038759689923;fillColor=#d5e8d4;strokeColor=#82b366;fillStyle=auto;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="120" as="sourcePoint" />
+            <mxPoint x="460" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="iSy0yKXPoq1yfuDHaZNE-23" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.triadArrow;dy=6.16;dx=8.27;arrowHead=15.33;rotation=-180;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="600" y="110" width="35" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="iSy0yKXPoq1yfuDHaZNE-28" value="" style="rhombus;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="510" y="10" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="iSy0yKXPoq1yfuDHaZNE-30" value="Is a target visible?" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="160" width="90" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="iSy0yKXPoq1yfuDHaZNE-31" value="Do we carry an item?" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="410" y="160" width="90" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="iSy0yKXPoq1yfuDHaZNE-32" value="Do we carry an item?" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="510" y="160" width="90" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
